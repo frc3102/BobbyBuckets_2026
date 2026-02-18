@@ -1,13 +1,14 @@
-package frc.robot.subsystems.intake.feed;
+package frc.robot.subsystems.intake.tilt;
 
-import static edu.wpi.first.units.Units.Volts;
+import static edu.wpi.first.units.Units.Degrees;
 
-import edu.wpi.first.units.measure.Voltage;
+import edu.wpi.first.units.measure.Angle;
 
-public class IntakeFeedConstants {
-  public static final Voltage VOLTAGE = Volts.of(0);
+public class IntakeTiltConstants {
   public static final int CAN_ID = -1;
-  public static final double GEAR_RATIO = 3;
+
+  public static final int GEAR_RATIO = 3;
+  public static final Angle EXTENDED_POSITION = Degrees.of(45);
 
   public static class Motor {
     public static final double KP = 1.;

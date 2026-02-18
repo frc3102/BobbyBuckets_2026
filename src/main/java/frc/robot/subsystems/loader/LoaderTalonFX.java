@@ -1,4 +1,4 @@
-package frc.robot.subsystems.intake.feed;
+package frc.robot.subsystems.loader;
 
 import static frc.robot.util.PhoenixUtil.tryUntilOk;
 
@@ -16,9 +16,8 @@ import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
 import frc.lib.team6328.util.LoggedTunableNumber;
 
-public class IntakeFeedTalonFX implements IntakeFeedIO {
-
-  private final TalonFX intake = new TalonFX(IntakeFeedConstants.CAN_ID);
+public class LoaderTalonFX implements LoaderIO {
+  private final TalonFX intake = new TalonFX(LoaderConstants.CAN_ID);
   private final StatusSignal<Angle> intakePositionRot = intake.getPosition();
   private final StatusSignal<AngularVelocity> intakeVelocityRotPerSec = intake.getVelocity();
   private final StatusSignal<Voltage> intakeAppliedVolts = intake.getMotorVoltage();
@@ -28,24 +27,24 @@ public class IntakeFeedTalonFX implements IntakeFeedIO {
   private final VoltageOut voltageRequest = new VoltageOut(0.0);
 
   private final LoggedTunableNumber motorKP =
-      new LoggedTunableNumber("IntakeFeed/kP", IntakeFeedConstants.Motor.KP);
+      new LoggedTunableNumber("Loader/kP", LoaderConstants.Motor.KP);
   private final LoggedTunableNumber motorKI =
-      new LoggedTunableNumber("IntakeFeed/kI", IntakeFeedConstants.Motor.KI);
+      new LoggedTunableNumber("Loader/kI", LoaderConstants.Motor.KI);
   private final LoggedTunableNumber motorKD =
-      new LoggedTunableNumber("IntakeFeed/kD", IntakeFeedConstants.Motor.KD);
+      new LoggedTunableNumber("Loader/kD", LoaderConstants.Motor.KD);
 
   private final LoggedTunableNumber motorKS =
-      new LoggedTunableNumber("IntakeFeed/kS", IntakeFeedConstants.Motor.KS);
+      new LoggedTunableNumber("Loader/kS", LoaderConstants.Motor.KS);
   private final LoggedTunableNumber motorKG =
-      new LoggedTunableNumber("IntakeFeed/kG", IntakeFeedConstants.Motor.KG);
+      new LoggedTunableNumber("Loader/kG", LoaderConstants.Motor.KG);
   private final LoggedTunableNumber motorKV =
-      new LoggedTunableNumber("IntakeFeed/kV", IntakeFeedConstants.Motor.KV);
+      new LoggedTunableNumber("Loader/kV", LoaderConstants.Motor.KV);
   private final LoggedTunableNumber motorKA =
-      new LoggedTunableNumber("IntakeFeed/kA", IntakeFeedConstants.Motor.KA);
+      new LoggedTunableNumber("Loader/kA", LoaderConstants.Motor.KA);
 
-  public IntakeFeedTalonFX() {
+  public LoaderTalonFX() {
     var intakeConfig = new TalonFXConfiguration();
-    intakeConfig.CurrentLimits.SupplyCurrentLimit = IntakeFeedConstants.Motor.CURRENT_LIMIT;
+    intakeConfig.CurrentLimits.SupplyCurrentLimit = LoaderConstants.Motor.CURRENT_LIMIT;
     intakeConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
     intakeConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
     intakeConfig.Slot0.kP = motorKP.get();
@@ -73,12 +72,12 @@ public class IntakeFeedTalonFX implements IntakeFeedIO {
   }
 
   @Override
-  public void updateInputs(IntakeFeedIOInputs inputs) {
+  public void updateInputs(LoaderIOInputs inputs) {
     var status =
         BaseStatusSignal.refreshAll(
             intakePositionRot, intakeVelocityRotPerSec, intakeAppliedVolts, intakeCurrentAmps);
     inputs.connected = status.isOK();
-    inputs.velocity = intakeVelocityRotPerSec.getValue().div(IntakeFeedConstants.GEAR_RATIO);
+    inputs.velocity = intakeVelocityRotPerSec.getValue().div(LoaderConstants.GEAR_RATIO);
     inputs.appliedVolts = intakeAppliedVolts.getValue();
     inputs.currentAmps = intakeCurrentAmps.getValue();
     inputs.temp = intakeCurrentTemp.getValue();
