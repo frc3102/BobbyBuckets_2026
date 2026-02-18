@@ -16,7 +16,7 @@ import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
 import frc.lib.team6328.util.LoggedTunableNumber;
 
-public class IntakeTiltTalonFX implements IntakeTiltIO {
+public class IntakeTiltIOTalonFX implements IntakeTiltIO {
 
   private final TalonFX tilt = new TalonFX(IntakeTiltConstants.CAN_ID);
   private final StatusSignal<Angle> tiltPositionRot = tilt.getPosition();
@@ -43,7 +43,7 @@ public class IntakeTiltTalonFX implements IntakeTiltIO {
   private final LoggedTunableNumber motorKA =
       new LoggedTunableNumber("IntakeTilt/kA", IntakeTiltConstants.Motor.KA);
 
-  public IntakeTiltTalonFX() {
+  public IntakeTiltIOTalonFX() {
     var tiltConfig = new TalonFXConfiguration();
     tiltConfig.CurrentLimits.SupplyCurrentLimit = IntakeTiltConstants.Motor.CURRENT_LIMIT;
     tiltConfig.CurrentLimits.SupplyCurrentLimitEnable = true;

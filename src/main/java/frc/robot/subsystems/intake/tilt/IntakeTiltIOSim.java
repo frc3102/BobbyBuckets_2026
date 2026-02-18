@@ -4,7 +4,7 @@ import static edu.wpi.first.units.Units.Radians;
 
 import edu.wpi.first.units.measure.Angle;
 
-public class IntakeTiltSim implements IntakeTiltIO {
+public class IntakeTiltIOSim implements IntakeTiltIO {
 
   private Angle angle = Radians.of(0);
 

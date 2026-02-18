@@ -29,5 +29,10 @@ public final class Constants {
     REPLAY
   }
 
+  public static Mode getMode() {
+    return currentMode;
+  }
+
   public static final boolean TUNING_MODE = false;
+  public static final double LOOP_PERIOD_SECS = 0.02;
 }
