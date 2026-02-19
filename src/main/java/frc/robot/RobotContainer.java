@@ -23,18 +23,15 @@ import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
 import frc.robot.subsystems.intake.feed.IntakeFeed;
 import frc.robot.subsystems.intake.feed.IntakeFeedIO;
-import frc.robot.subsystems.intake.feed.IntakeFeedIOSim;
 import frc.robot.subsystems.intake.feed.IntakeFeedIOTalonFX;
 import frc.robot.subsystems.intake.tilt.IntakeTilt;
 import frc.robot.subsystems.intake.tilt.IntakeTiltIO;
-import frc.robot.subsystems.intake.tilt.IntakeTiltIOSim;
 import frc.robot.subsystems.intake.tilt.IntakeTiltIOTalonFX;
 import frc.robot.subsystems.launcher.Launcher;
 import frc.robot.subsystems.launcher.LauncherIO;
 import frc.robot.subsystems.launcher.LauncherIOTalonFX;
 import frc.robot.subsystems.loader.Loader;
 import frc.robot.subsystems.loader.LoaderIO;
-import frc.robot.subsystems.loader.LoaderIOSim;
 import frc.robot.subsystems.loader.LoaderIOTalonFX;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionConstants;
@@ -103,9 +100,9 @@ public class RobotContainer {
                 drive::addVisionMeasurement,
                 new VisionIOPhotonVisionSim(
                     VisionConstants.camera0Name, VisionConstants.robotToCamera0, drive::getPose));
-        intakeFeed = new IntakeFeed(new IntakeFeedIOSim());
-        intakeTilt = new IntakeTilt(new IntakeTiltIOSim());
-        loader = new Loader(new LoaderIOSim());
+        intakeFeed = new IntakeFeed(new IntakeFeedIOTalonFX());
+        intakeTilt = new IntakeTilt(new IntakeTiltIOTalonFX());
+        loader = new Loader(new LoaderIOTalonFX());
         launcher = new Launcher(new LauncherIOTalonFX());
         break;
 

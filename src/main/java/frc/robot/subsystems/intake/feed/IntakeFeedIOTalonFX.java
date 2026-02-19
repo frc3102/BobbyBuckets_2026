@@ -14,7 +14,9 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
+import frc.lib.team3061.sim.VelocitySystemSim;
 import frc.lib.team6328.util.LoggedTunableNumber;
+import frc.robot.Constants;
 
 public class IntakeFeedIOTalonFX implements IntakeFeedIO {
 
@@ -43,6 +45,8 @@ public class IntakeFeedIOTalonFX implements IntakeFeedIO {
   private final LoggedTunableNumber motorKA =
       new LoggedTunableNumber("IntakeFeed/kA", IntakeFeedConstants.Motor.KA);
 
+  private final VelocitySystemSim intakeSim;
+
   public IntakeFeedIOTalonFX() {
     var intakeConfig = new TalonFXConfiguration();
     intakeConfig.CurrentLimits.SupplyCurrentLimit = IntakeFeedConstants.Motor.CURRENT_LIMIT;
@@ -65,6 +69,8 @@ public class IntakeFeedIOTalonFX implements IntakeFeedIO {
         intakeCurrentAmps,
         intakeCurrentTemp);
     ParentDevice.optimizeBusUtilizationForAll(intake);
+
+    intakeSim = new VelocitySystemSim(intake, false, 0.5, 0.1, IntakeFeedConstants.GEAR_RATIO);
   }
 
   @Override
@@ -103,5 +109,8 @@ public class IntakeFeedIOTalonFX implements IntakeFeedIO {
         motorKG,
         motorKA,
         motorKV);
+    if (Constants.getMode() == Constants.Mode.SIM) {
+      this.intakeSim.updateSim();
+    }
   }
 }

@@ -14,7 +14,9 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
+import frc.lib.team3061.sim.ArmSystemSim;
 import frc.lib.team6328.util.LoggedTunableNumber;
+import frc.robot.Constants;
 
 public class IntakeTiltIOTalonFX implements IntakeTiltIO {
 
@@ -43,6 +45,8 @@ public class IntakeTiltIOTalonFX implements IntakeTiltIO {
   private final LoggedTunableNumber motorKA =
       new LoggedTunableNumber("IntakeTilt/kA", IntakeTiltConstants.Motor.KA);
 
+  private final ArmSystemSim tiltSim;
+
   public IntakeTiltIOTalonFX() {
     var tiltConfig = new TalonFXConfiguration();
     tiltConfig.CurrentLimits.SupplyCurrentLimit = IntakeTiltConstants.Motor.CURRENT_LIMIT;
@@ -67,6 +71,10 @@ public class IntakeTiltIOTalonFX implements IntakeTiltIO {
         tiltCurrentAmps,
         tiltCurrentTemp);
     ParentDevice.optimizeBusUtilizationForAll(tilt);
+
+    tiltSim =
+        new ArmSystemSim(
+            tilt, false, IntakeTiltConstants.GEAR_RATIO, .3, 2, 0, 45, 45, "IntakeTilt");
   }
 
   @Override
@@ -111,5 +119,8 @@ public class IntakeTiltIOTalonFX implements IntakeTiltIO {
         motorKG,
         motorKA,
         motorKV);
+    if (Constants.getMode() == Constants.Mode.SIM) {
+      this.tiltSim.updateSim();
+    }
   }
 }

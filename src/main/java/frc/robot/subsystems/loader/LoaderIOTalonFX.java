@@ -14,7 +14,9 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
+import frc.lib.team3061.sim.VelocitySystemSim;
 import frc.lib.team6328.util.LoggedTunableNumber;
+import frc.robot.Constants;
 
 public class LoaderIOTalonFX implements LoaderIO {
   private final TalonFX intake = new TalonFX(LoaderConstants.CAN_ID);
@@ -42,6 +44,8 @@ public class LoaderIOTalonFX implements LoaderIO {
   private final LoggedTunableNumber motorKA =
       new LoggedTunableNumber("Loader/kA", LoaderConstants.Motor.KA);
 
+  private final VelocitySystemSim loaderSim;
+
   public LoaderIOTalonFX() {
     var intakeConfig = new TalonFXConfiguration();
     intakeConfig.CurrentLimits.SupplyCurrentLimit = LoaderConstants.Motor.CURRENT_LIMIT;
@@ -64,6 +68,8 @@ public class LoaderIOTalonFX implements LoaderIO {
         intakeCurrentAmps,
         intakeCurrentTemp);
     ParentDevice.optimizeBusUtilizationForAll(intake);
+
+    this.loaderSim = new VelocitySystemSim(intake, false, 0.5, 0.1, LoaderConstants.GEAR_RATIO);
   }
 
   @Override
@@ -102,5 +108,9 @@ public class LoaderIOTalonFX implements LoaderIO {
         motorKG,
         motorKA,
         motorKV);
+
+    if (Constants.getMode() == Constants.Mode.SIM) {
+      this.loaderSim.updateSim();
+    }
   }
 }
