@@ -33,6 +33,9 @@ import frc.robot.subsystems.launcher.LauncherIOTalonFX;
 import frc.robot.subsystems.loader.Loader;
 import frc.robot.subsystems.loader.LoaderIO;
 import frc.robot.subsystems.loader.LoaderIOTalonFX;
+import frc.robot.subsystems.turret.Turret;
+import frc.robot.subsystems.turret.TurretIO;
+import frc.robot.subsystems.turret.TurretIOTalonFX;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionConstants;
 import frc.robot.subsystems.vision.VisionIO;
@@ -54,6 +57,7 @@ public class RobotContainer {
   private final IntakeTilt intakeTilt;
   private final Loader loader;
   private final Launcher launcher;
+  private final Turret turret;
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
@@ -83,6 +87,7 @@ public class RobotContainer {
         intakeTilt = new IntakeTilt(new IntakeTiltIOTalonFX());
         loader = new Loader(new LoaderIOTalonFX());
         launcher = new Launcher(new LauncherIOTalonFX());
+        turret = new Turret(new TurretIOTalonFX());
 
         break;
 
@@ -104,6 +109,7 @@ public class RobotContainer {
         intakeTilt = new IntakeTilt(new IntakeTiltIOTalonFX());
         loader = new Loader(new LoaderIOTalonFX());
         launcher = new Launcher(new LauncherIOTalonFX());
+        turret = new Turret(new TurretIOTalonFX());
         break;
 
       default:
@@ -120,6 +126,8 @@ public class RobotContainer {
         intakeTilt = new IntakeTilt(new IntakeTiltIO() {});
         loader = new Loader(new LoaderIO() {});
         launcher = new Launcher(new LauncherIO() {});
+        turret = new Turret(new TurretIO() {});
+
         break;
     }
 
