@@ -7,8 +7,8 @@ import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
-import com.ctre.phoenix6.controls.TorqueCurrentFOC;
-import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
+import com.ctre.phoenix6.controls.VelocityDutyCycle;
+import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.ParentDevice;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
@@ -24,8 +24,8 @@ import frc.robot.Constants;
 import frc.robot.util.PhoenixUtil;
 
 public class LauncherIOTalonFX implements LauncherIO {
-  private VelocityTorqueCurrentFOC velocityRequest;
-  private TorqueCurrentFOC currentRequest;
+  private VelocityDutyCycle velocityRequest;
+  private VoltageOut voltageOut;
 
   private AngularVelocity referenceVelocity = RotationsPerSecond.of(0);
 
@@ -97,6 +97,8 @@ public class LauncherIOTalonFX implements LauncherIO {
 
     this.launcherSim =
         new VelocitySystemSim(leader, LauncherConstants.LEADER_INVERTED, 0.05, 0.01, 1);
+    this.voltageOut = new VoltageOut(Volts.of(0));
+    this.velocityRequest = new VelocityDutyCycle(RotationsPerSecond.of(50));
   }
 
   private void configLeader() {
@@ -131,8 +133,8 @@ public class LauncherIOTalonFX implements LauncherIO {
   }
 
   @Override
-  public void setCurrent(Current amps) {
-    leader.setControl(currentRequest.withOutput(amps));
+  public void setVoltage(Voltage volts) {
+    leader.setControl(voltageOut.withOutput(volts));
   }
 
   @Override

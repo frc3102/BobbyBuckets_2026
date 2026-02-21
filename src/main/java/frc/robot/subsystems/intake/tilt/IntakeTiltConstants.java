@@ -5,9 +5,9 @@ import static edu.wpi.first.units.Units.Degrees;
 import edu.wpi.first.units.measure.Angle;
 
 public class IntakeTiltConstants {
-  public static final int CAN_ID = -1;
+  public static final int CAN_ID = 5;
 
-  public static final int GEAR_RATIO = 3;
+  public static final int GEAR_RATIO = 5;
   public static final Angle EXTENDED_POSITION = Degrees.of(45);
 
   public static class Motor {

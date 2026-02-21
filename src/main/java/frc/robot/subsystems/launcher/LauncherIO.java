@@ -29,5 +29,5 @@ public interface LauncherIO {
 
   public default void setTargetVelocity(AngularVelocity velocity) {}
 
-  public default void setCurrent(Current amps) {}
+  public default void setVoltage(Voltage volts) {}
 }

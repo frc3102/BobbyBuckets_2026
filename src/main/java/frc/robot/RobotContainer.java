@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Volts;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -39,14 +41,6 @@ import frc.robot.subsystems.loader.LoaderIOTalonFX;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.TurretIO;
 import frc.robot.subsystems.turret.TurretIOTalonFX;
-import frc.robot.subsystems.vision.Vision;
-import frc.robot.subsystems.vision.VisionConstants;
-import frc.robot.subsystems.vision.VisionIO;
-import frc.robot.subsystems.vision.VisionIOLimelight;
-import frc.robot.subsystems.vision.VisionIOPhotonVisionSim;
-
-import static edu.wpi.first.units.Units.RotationsPerSecond;
-
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -58,7 +52,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 public class RobotContainer {
   // Subsystems
   private final Drive drive;
-  private final Vision vision;
+  // private final Vision vision;
   private final IntakeFeed intakeFeed;
   private final IntakeTilt intakeTilt;
   private final Loader loader;
@@ -86,10 +80,10 @@ public class RobotContainer {
                 new ModuleIOTalonFX(TunerConstants.FrontRight),
                 new ModuleIOTalonFX(TunerConstants.BackLeft),
                 new ModuleIOTalonFX(TunerConstants.BackRight));
-        vision =
-            new Vision(
-                drive::addVisionMeasurement,
-                new VisionIOLimelight(VisionConstants.camera0Name, drive::getRotation));
+        // vision =
+        //     new Vision(
+        //         drive::addVisionMeasurement,
+        //         new VisionIOLimelight(VisionConstants.camera0Name, drive::getRotation));
         intakeFeed = new IntakeFeed(new IntakeFeedIOTalonFX());
         intakeTilt = new IntakeTilt(new IntakeTiltIOTalonFX());
         loader = new Loader(new LoaderIOTalonFX());
@@ -107,11 +101,12 @@ public class RobotContainer {
                 new ModuleIOSim(TunerConstants.FrontRight),
                 new ModuleIOSim(TunerConstants.BackLeft),
                 new ModuleIOSim(TunerConstants.BackRight));
-        vision =
-            new Vision(
-                drive::addVisionMeasurement,
-                new VisionIOPhotonVisionSim(
-                    VisionConstants.camera0Name, VisionConstants.robotToCamera0, drive::getPose));
+        // vision =
+        //     new Vision(
+        //         drive::addVisionMeasurement,
+        //         new VisionIOPhotonVisionSim(
+        //             VisionConstants.camera0Name, VisionConstants.robotToCamera0,
+        // drive::getPose));
         intakeFeed = new IntakeFeed(new IntakeFeedIOTalonFX());
         intakeTilt = new IntakeTilt(new IntakeTiltIOTalonFX());
         loader = new Loader(new LoaderIOTalonFX());
@@ -128,7 +123,7 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {},
                 new ModuleIO() {});
-        vision = new Vision(drive::addVisionMeasurement, new VisionIO() {});
+        // vision = new Vision(drive::addVisionMeasurement, new VisionIO() {});
         intakeFeed = new IntakeFeed(new IntakeFeedIO() {});
         intakeTilt = new IntakeTilt(new IntakeTiltIO() {});
         loader = new Loader(new LoaderIO() {});
@@ -183,7 +178,12 @@ public class RobotContainer {
     driverController.back().onTrue(drive.zeroGyroscope());
 
     coDriverController.button(10).onTrue(new StartShooter(loader, launcher));
-    coDriverController.button(11).onTrue(new StopShooter(loader, launcher));    
+    coDriverController.button(11).onTrue(new StopShooter(loader, launcher));
+
+    coDriverController.button(7).onTrue(launcher.startAtVoltage(Volts.of(6)));
+    coDriverController.button(8).onTrue(launcher.stopLauncher());
+    coDriverController.button(4).onTrue(loader.startLoader());
+    coDriverController.button(5).onTrue(loader.stopLoader());
   }
 
   /**

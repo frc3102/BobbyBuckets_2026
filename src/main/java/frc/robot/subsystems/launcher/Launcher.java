@@ -5,6 +5,7 @@ import static edu.wpi.first.units.Units.*;
 import com.ctre.phoenix6.SignalLogger;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -24,12 +25,11 @@ public class Launcher extends SubsystemBase {
     this.sysIdRoutine =
         new SysIdRoutine(
             new SysIdRoutine.Config(
-                Volts.of(5).per(Second), // will be 5 amps/sec
-                Volts.of(10), // start at 10A
+                Volts.of(2).per(Second), // will be 5 amps/sec
+                Volts.of(5), // start at 10A
                 Seconds.of(5), // use default timeout (10 s)
                 state -> SignalLogger.writeString("SysId_State", state.toString())),
-            new SysIdRoutine.Mechanism(
-                output -> io.setCurrent(Amps.of(output.in(Volts))), null, this));
+            new SysIdRoutine.Mechanism(output -> io.setVoltage(output), null, this));
     SysIdRoutineChooser.getInstance().addOption("Launcher Voltage", sysIdRoutine);
   }
 
@@ -43,7 +43,7 @@ public class Launcher extends SubsystemBase {
   public Command stopLauncher() {
     return runOnce(
         () -> {
-          io.setTargetVelocity(RotationsPerSecond.of(0));
+          io.setVoltage(Volts.of(0));
         });
   }
 
@@ -51,6 +51,13 @@ public class Launcher extends SubsystemBase {
     return runOnce(
         () -> {
           io.setTargetVelocity(speed);
+        });
+  }
+
+  public Command startAtVoltage(Voltage volts) {
+    return runOnce(
+        () -> {
+          io.setVoltage(volts);
         });
   }
 
