@@ -11,6 +11,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
@@ -60,7 +61,8 @@ public class RobotContainer {
   private final Turret turret;
 
   // Controller
-  private final CommandXboxController controller = new CommandXboxController(0);
+  private final CommandXboxController driverController = new CommandXboxController(0);
+  private final CommandGenericHID coDriverController = new CommandGenericHID(1);
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -165,12 +167,15 @@ public class RobotContainer {
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
-            () -> -controller.getLeftY(),
-            () -> -controller.getLeftX(),
-            () -> -controller.getRightX()));
+            () -> -driverController.getLeftY(),
+            () -> -driverController.getLeftX(),
+            () -> -driverController.getRightX()));
 
-    controller.a().onTrue(intakeFeed.startIntake());
-    controller.b().onTrue(intakeFeed.stopIntake());
+    driverController.a().onTrue(intakeFeed.startIntake());
+    driverController.b().onTrue(intakeFeed.stopIntake());
+    driverController.x().onTrue(intakeTilt.extendHopper());
+    driverController.y().onTrue(intakeTilt.retractHopper());
+    driverController.back().onTrue(drive.zeroGyroscope());
   }
 
   /**

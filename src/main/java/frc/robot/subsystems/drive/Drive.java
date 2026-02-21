@@ -356,4 +356,11 @@ public class Drive extends SubsystemBase {
       new Translation2d(TunerConstants.BackRight.LocationX, TunerConstants.BackRight.LocationY)
     };
   }
+
+  public Command zeroGyroscope() {
+    return runOnce(
+        () -> {
+          gyroIO.resetGyro();
+        });
+  }
 }
