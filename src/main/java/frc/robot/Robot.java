@@ -7,14 +7,24 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Threads;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.lib.team6328.util.LoggedTracer;
+
 import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
+
+import com.ctre.phoenix6.SignalLogger;
+import com.pathplanner.lib.commands.PathfindingCommand;
+import com.pathplanner.lib.util.PathPlannerLogging;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -25,6 +35,8 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 public class Robot extends LoggedRobot {
   private Command autonomousCommand;
   private RobotContainer robotContainer;
+  private boolean autoMessagePrinted = false;
+  private double autoStart;
 
   public Robot() {
     // Record metadata
@@ -63,17 +75,39 @@ public class Robot extends LoggedRobot {
         break;
     }
 
+    if (!Constants.TUNING_MODE) {
+      SignalLogger.enableAutoLogging(false);
+    }
+
+    PathPlannerLogging.setLogCurrentPoseCallback(
+        pose -> Logger.recordOutput("PathFollowing/currentPose", pose));
+
+    // Logging callback for target robot pose
+    PathPlannerLogging.setLogTargetPoseCallback(
+        pose -> Logger.recordOutput("PathFollowing/targetPose", pose));
+
+    // Logging callback for the active path, this is sent as a list of poses
+    PathPlannerLogging.setLogActivePathCallback(
+        poses -> Logger.recordOutput("PathFollowing/activePath", poses.toArray(new Pose2d[0])));
+
     // Start AdvantageKit logger
     Logger.start();
 
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
+
+    CommandScheduler.getInstance().schedule(PathfindingCommand.warmupCommand());
+
+    if (!Constants.TUNING_MODE) {
+      Threads.setCurrentThreadPriority(true, 10);
+    }
   }
 
   /** This function is called periodically during all modes. */
   @Override
   public void robotPeriodic() {
+    LoggedTracer.reset();
     // Optionally switch the thread to high priority to improve loop
     // timing (see the template project documentation for details)
     // Threads.setCurrentThreadPriority(true, 99);
@@ -85,8 +119,19 @@ public class Robot extends LoggedRobot {
     // the Command-based framework to work.
     CommandScheduler.getInstance().run();
 
+    if (autonomousCommand != null && !autonomousCommand.isScheduled() && !autoMessagePrinted) {
+      if (DriverStation.isAutonomousEnabled()) {
+        System.out.println(
+            String.format("*** Auto finished in %.2f secs ***", Timer.getTimestamp() - autoStart));
+      } else {
+        System.out.println(
+            String.format("*** Auto cancelled in %.2f secs ***", Timer.getTimestamp() - autoStart));
+      }
+      autoMessagePrinted = true;
+    }
     // Return to non-RT thread priority (do not modify the first argument)
     // Threads.setCurrentThreadPriority(false, 10);
+    LoggedTracer.record("RobotPeriodic");
   }
 
   /** This function is called once when the robot is disabled. */
@@ -100,6 +145,8 @@ public class Robot extends LoggedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    autoStart = Timer.getTimestamp();
+    autoMessagePrinted = false;
     autonomousCommand = robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
