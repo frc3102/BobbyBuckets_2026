@@ -16,6 +16,8 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
+import frc.lib.team6328.util.LoggedTracer;
+
 import org.littletonrobotics.junction.Logger;
 
 public class Module {
@@ -69,6 +71,8 @@ public class Module {
     driveDisconnectedAlert.set(!inputs.driveConnected);
     turnDisconnectedAlert.set(!inputs.turnConnected);
     turnEncoderDisconnectedAlert.set(!inputs.turnEncoderConnected);
+
+    LoggedTracer.record("Module" + this.index);
   }
 
   /** Runs the module with the specified setpoint state. Mutates the state to optimize it. */
