@@ -17,7 +17,6 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import frc.lib.team6328.util.LoggedTracer;
-
 import org.littletonrobotics.junction.Logger;
 
 public class Module {
