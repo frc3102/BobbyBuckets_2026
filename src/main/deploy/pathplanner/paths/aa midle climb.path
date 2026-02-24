@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.57834595959596,
+        "y": 5.512310606060606
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.2691414141414152,
+        "y": 5.363434343434344
+      },
+      "isLocked": false,
+      "linkedName": "bumpy go baksies"
+    },
+    {
+      "anchor": {
+        "x": 1.146843434343435,
+        "y": 4.893901515151515
+      },
+      "prevControl": {
+        "x": 1.3914808805901222,
+        "y": 4.945404135413976
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 112.03622694014551
+  },
+  "useDefaultConstraints": true
+}

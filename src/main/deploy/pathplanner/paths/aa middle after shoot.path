@@ -1,0 +1,63 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.188977272727273,
+        "y": 4.035
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.242563131313131,
+        "y": 6.210883838383839
+      },
+      "isLocked": false,
+      "linkedName": "Middle Start/Shoot"
+    },
+    {
+      "anchor": {
+        "x": 7.273674242424242,
+        "y": 5.317626262626264
+      },
+      "prevControl": {
+        "x": 6.231540404040403,
+        "y": 5.455050505050505
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "bumpy ball pickup"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.22807017543859792,
+      "rotationDegrees": 52.37429117387134
+    },
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 41.41538947606219
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -2.045408488887245
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}
