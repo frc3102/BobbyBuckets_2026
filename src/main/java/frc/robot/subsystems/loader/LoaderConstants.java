@@ -10,10 +10,10 @@ public class LoaderConstants {
   public static final double GEAR_RATIO = 3;
 
   public static class Motor {
-    public static final double KP = 5.;
+    public static final double KP = 2.;
     public static final double KI = 0;
     public static final double KD = 0;
-    public static final double KS = 0;
+    public static final double KS = 0.2;
     public static final double KG = 0;
     public static final double KV = 0;
     public static final double KA = 0;

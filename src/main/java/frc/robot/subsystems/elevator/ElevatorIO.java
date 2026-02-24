@@ -20,8 +20,8 @@ public interface ElevatorIO {
     public Current statorCurrentAmps = Amps.of(0);
     public Temperature temp = Celsius.of(0);
     public AngularVelocity velocity = RotationsPerSecond.of(0);
-    public Angle closedLoopReference = Radians.of(0);
-    public Angle closedLoopError = Radians.of(0);
+    public double closedLoopReference = 0;
+    public double closedLoopError = 0;
     public Distance linearPosition = Inches.of(0);
     public Angle angularPosition = Rotations.of(0);
   }

@@ -71,7 +71,7 @@ public class IntakeTiltIOTalonFX implements IntakeTiltIO {
         tiltCurrentAmps,
         tiltCurrentTemp);
     ParentDevice.optimizeBusUtilizationForAll(tilt);
-
+    zeroPosition();
     tiltSim =
         new ArmSystemSim(
             tilt, false, IntakeTiltConstants.GEAR_RATIO, .3, 2, 0, 45, 45, "IntakeTilt");
@@ -122,5 +122,10 @@ public class IntakeTiltIOTalonFX implements IntakeTiltIO {
     if (Constants.getMode() == Constants.Mode.SIM) {
       this.tiltSim.updateSim();
     }
+  }
+
+  @Override
+  public void zeroPosition() {
+    this.tilt.setPosition(0);
   }
 }

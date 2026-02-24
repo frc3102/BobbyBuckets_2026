@@ -11,7 +11,7 @@ public class ElevatorConstants {
   public static final double GEAR_RATIO = 1;
 
   public static class Mechanism {
-    public static final Distance PULLEY_CIRCUMFERENCE = Inches.of(0);
+    public static final Distance PULLEY_CIRCUMFERENCE = Inches.of(1);
     public static final Mass ELEVATOR_MASS = Kilograms.of(3);
     // Max and min height are measured at the top of the baby carriage
     public static final Distance MAX_HEIGHT = Inches.of(29.75);
@@ -38,8 +38,8 @@ public class ElevatorConstants {
     public static final double KP = 1.;
     public static final double KI = 0;
     public static final double KD = 0;
-    public static final double KS = 0;
-    public static final double KG = 0;
+    public static final double KS = 0.2;
+    public static final double KG = 1;
     public static final double KV = 0;
     public static final double KA = 0;
     public static final double KV_EXPO = 0;

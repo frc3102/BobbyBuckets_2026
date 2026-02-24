@@ -27,4 +27,6 @@ public interface IntakeTiltIO {
   public default void setAngle(Angle angle) {}
 
   public default void setVoltage(Voltage volts) {}
+
+  public default void zeroPosition() {}
 }

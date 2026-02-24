@@ -139,20 +139,23 @@ public class LauncherIOTalonFX implements LauncherIO {
 
   @Override
   public void updateInputs(LauncherIOInputs inputs) {
+
     inputs.leaderConnected =
-        BaseStatusSignal.isAllGood(
-            leaderStatorCurrentStatusSignal,
-            leaderSupplyCurrentStatusSignal,
-            leaderVelocityStatusSignal,
-            leaderTemperatureStatusSignal,
-            leaderVoltageStatusSignal);
+        BaseStatusSignal.refreshAll(
+                leaderStatorCurrentStatusSignal,
+                leaderSupplyCurrentStatusSignal,
+                leaderVelocityStatusSignal,
+                leaderTemperatureStatusSignal,
+                leaderVoltageStatusSignal)
+            .isOK();
     inputs.followerConnected =
-        BaseStatusSignal.isAllGood(
-            followerStatorCurrentStatusSignal,
-            followerSupplyCurrentStatusSignal,
-            followerVelocityStatusSignal,
-            followerTemperatureStatusSignal,
-            followerVoltageStatusSignal);
+        BaseStatusSignal.refreshAll(
+                followerStatorCurrentStatusSignal,
+                followerSupplyCurrentStatusSignal,
+                followerVelocityStatusSignal,
+                followerTemperatureStatusSignal,
+                followerVoltageStatusSignal)
+            .isOK();
 
     inputs.leaderAppliedVolts = leaderVoltageStatusSignal.getValue();
     inputs.leaderCurrentAmps = leaderSupplyCurrentStatusSignal.getValue();

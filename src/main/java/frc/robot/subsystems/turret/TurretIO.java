@@ -25,4 +25,6 @@ public interface TurretIO {
   public default void stepAngle(Angle step) {}
 
   public default void setVoltage(Voltage volts) {}
+
+  public default void zeroPosition() {}
 }

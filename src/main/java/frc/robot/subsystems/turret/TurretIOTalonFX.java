@@ -57,6 +57,8 @@ public class TurretIOTalonFX implements TurretIO {
         50.0, positionRot, velocityRotPerSec, appliedVolts, currentAmps, currentTemp);
     ParentDevice.optimizeBusUtilizationForAll(turret);
 
+    zeroPosition();
+
     turretSim =
         new ArmSystemSim(
             turret,
@@ -119,5 +121,10 @@ public class TurretIOTalonFX implements TurretIO {
     if (Constants.getMode() == Constants.Mode.SIM) {
       this.turretSim.updateSim();
     }
+  }
+
+  @Override
+  public void zeroPosition() {
+    turret.setPosition(0);
   }
 }

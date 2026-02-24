@@ -10,7 +10,7 @@ public class LauncherConstants {
     public static final double KP = 5.;
     public static final double KI = 0;
     public static final double KD = 0;
-    public static final double KS = 0;
+    public static final double KS = 0.5;
 
     public static final int CURRENT_LIMIT = 60;
   }
