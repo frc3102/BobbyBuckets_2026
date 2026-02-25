@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import static edu.wpi.first.units.Units.Volts;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -17,8 +15,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
-import frc.robot.commands.StartShooter;
-import frc.robot.commands.StopShooter;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
@@ -32,9 +28,6 @@ import frc.robot.subsystems.intake.feed.IntakeFeedIOTalonFX;
 import frc.robot.subsystems.intake.tilt.IntakeTilt;
 import frc.robot.subsystems.intake.tilt.IntakeTiltIO;
 import frc.robot.subsystems.intake.tilt.IntakeTiltIOTalonFX;
-import frc.robot.subsystems.launcher.Launcher;
-import frc.robot.subsystems.launcher.LauncherIO;
-import frc.robot.subsystems.launcher.LauncherIOTalonFX;
 import frc.robot.subsystems.loader.Loader;
 import frc.robot.subsystems.loader.LoaderIO;
 import frc.robot.subsystems.loader.LoaderIOTalonFX;
@@ -61,7 +54,7 @@ public class RobotContainer {
   private final IntakeFeed intakeFeed;
   private final IntakeTilt intakeTilt;
   private final Loader loader;
-  private final Launcher launcher;
+  // private final Launcher launcher;
   private final Turret turret;
 
   // Controller
@@ -92,7 +85,7 @@ public class RobotContainer {
         intakeFeed = new IntakeFeed(new IntakeFeedIOTalonFX());
         intakeTilt = new IntakeTilt(new IntakeTiltIOTalonFX());
         loader = new Loader(new LoaderIOTalonFX());
-        launcher = new Launcher(new LauncherIOTalonFX());
+        // launcher = new Launcher(new LauncherIOTalonFX());
         turret = new Turret(new TurretIOTalonFX());
 
         break;
@@ -114,7 +107,7 @@ public class RobotContainer {
         intakeFeed = new IntakeFeed(new IntakeFeedIOTalonFX());
         intakeTilt = new IntakeTilt(new IntakeTiltIOTalonFX());
         loader = new Loader(new LoaderIOTalonFX());
-        launcher = new Launcher(new LauncherIOTalonFX());
+        // launcher = new Launcher(new LauncherIOTalonFX());
         turret = new Turret(new TurretIOTalonFX());
         break;
 
@@ -131,7 +124,7 @@ public class RobotContainer {
         intakeFeed = new IntakeFeed(new IntakeFeedIO() {});
         intakeTilt = new IntakeTilt(new IntakeTiltIO() {});
         loader = new Loader(new LoaderIO() {});
-        launcher = new Launcher(new LauncherIO() {});
+        // launcher = new Launcher(new LauncherIO() {});
         turret = new Turret(new TurretIO() {});
 
         break;
@@ -181,11 +174,11 @@ public class RobotContainer {
     driverController.y().onTrue(intakeTilt.retractHopper());
     driverController.back().onTrue(drive.zeroGyroscope());
 
-    coDriverController.button(10).onTrue(new StartShooter(loader, launcher));
-    coDriverController.button(11).onTrue(new StopShooter(loader, launcher));
+    // coDriverController.button(10).onTrue(new StartShooter(loader, launcher));
+    // coDriverController.button(11).onTrue(new StopShooter(loader, launcher));
 
-    coDriverController.button(7).onTrue(launcher.startAtVoltage(Volts.of(6)));
-    coDriverController.button(8).onTrue(launcher.stopLauncher());
+    // coDriverController.button(7).onTrue(launcher.startAtVoltage(Volts.of(6)));
+    // coDriverController.button(8).onTrue(launcher.stopLauncher());
     coDriverController.button(4).onTrue(loader.startLoader());
     coDriverController.button(5).onTrue(loader.stopLoader());
   }
