@@ -2,6 +2,8 @@ package frc.robot.subsystems.turret;
 
 import static edu.wpi.first.units.Units.*;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -67,6 +69,7 @@ public class TurretIOTalonFX implements TurretIO {
 
     positionRequest = new PositionVoltage(0).withFeedForward(2).withVelocity(1);
     zeroPosition();
+    Logger.recordOutput("Turret/TargetAngle", Degrees.of(0).magnitude());
 
     turretSim =
         new ArmSystemSim(
@@ -88,6 +91,7 @@ public class TurretIOTalonFX implements TurretIO {
     } else if (angle.lt(TurretConstants.MIN_ANGLE)) {
       angle = TurretConstants.MIN_ANGLE;
     }
+    Logger.recordOutput("Turret/TargetAngle", angle.in(Degrees));
     turret.setControl(positionRequest.withPosition(angle.times(TurretConstants.GEAR_RATIO)));
   }
 
@@ -122,11 +126,17 @@ public class TurretIOTalonFX implements TurretIO {
           config.Slot0.kP = motionMagic[0];
           config.Slot0.kI = motionMagic[1];
           config.Slot0.kD = motionMagic[2];
+          config.Slot0.kS = motionMagic[3];
+          config.Slot0.kV = motionMagic[4];
+          config.Slot0.kA = motionMagic[5];
           this.turret.getConfigurator().apply(config);
         },
         motorKP,
         motorKI,
-        motorKD);
+        motorKD,
+        motorKS,
+        motorKV,
+        motorKA);
 
     if (Constants.getMode() == Constants.Mode.SIM) {
       this.turretSim.updateSim();
