@@ -5,7 +5,7 @@ import static edu.wpi.first.units.Units.*;
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.ParentDevice;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -29,7 +29,7 @@ public class TurretIOTalonFX implements TurretIO {
   private final StatusSignal<Current> currentAmps = turret.getSupplyCurrent();
   private final StatusSignal<Temperature> currentTemp = turret.getDeviceTemp();
 
-  private final MotionMagicVoltage positionRequest = new MotionMagicVoltage(0);
+  private final PositionVoltage positionRequest;
   private final VoltageOut voltageRequest = new VoltageOut(0);
 
   private final LoggedTunableNumber motorKP =
@@ -38,7 +38,12 @@ public class TurretIOTalonFX implements TurretIO {
       new LoggedTunableNumber("Turret/kI", TurretConstants.Motor.KI);
   private final LoggedTunableNumber motorKD =
       new LoggedTunableNumber("Turret/kD", TurretConstants.Motor.KD);
-
+  private final LoggedTunableNumber motorKS =
+      new LoggedTunableNumber("Turret/kS", TurretConstants.Motor.KS);
+  private final LoggedTunableNumber motorKV =
+      new LoggedTunableNumber("Turret/kV", TurretConstants.Motor.KV);
+  private final LoggedTunableNumber motorKA =
+      new LoggedTunableNumber("Turret/kA", TurretConstants.Motor.KA);
   private final ArmSystemSim turretSim;
 
   public TurretIOTalonFX() {
@@ -50,6 +55,9 @@ public class TurretIOTalonFX implements TurretIO {
     config.Slot0.kP = motorKP.get();
     config.Slot0.kI = motorKI.get();
     config.Slot0.kD = motorKD.get();
+    config.Slot0.kS = motorKS.get();
+    config.Slot0.kV = motorKV.get();
+    config.Slot0.kA = motorKA.get();
 
     PhoenixUtil.tryUntilOk(5, () -> turret.getConfigurator().apply(config, 0.25));
 
@@ -57,6 +65,7 @@ public class TurretIOTalonFX implements TurretIO {
         50.0, positionRot, velocityRotPerSec, appliedVolts, currentAmps, currentTemp);
     ParentDevice.optimizeBusUtilizationForAll(turret);
 
+    positionRequest = new PositionVoltage(0).withFeedForward(2).withVelocity(1);
     zeroPosition();
 
     turretSim =
@@ -97,8 +106,9 @@ public class TurretIOTalonFX implements TurretIO {
   @Override
   public void updateInputs(TurretIOInputs inputs) {
     inputs.connected =
-        BaseStatusSignal.isAllGood(
-            positionRot, velocityRotPerSec, appliedVolts, currentAmps, currentTemp);
+        BaseStatusSignal.refreshAll(
+                positionRot, velocityRotPerSec, appliedVolts, currentAmps, currentTemp)
+            .isOK();
     inputs.position = positionRot.getValue();
     inputs.appliedVolts = appliedVolts.getValue();
     inputs.currentAmps = currentAmps.getValue();

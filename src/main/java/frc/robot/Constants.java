@@ -33,6 +33,6 @@ public final class Constants {
     return currentMode;
   }
 
-  public static final boolean TUNING_MODE = false;
+  public static final boolean TUNING_MODE = true;
   public static final double LOOP_PERIOD_SECS = 0.02;
 }

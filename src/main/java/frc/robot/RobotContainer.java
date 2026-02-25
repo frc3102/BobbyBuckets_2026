@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Degrees;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -176,6 +178,9 @@ public class RobotContainer {
 
     // coDriverController.button(10).onTrue(new StartShooter(loader, launcher));
     // coDriverController.button(11).onTrue(new StopShooter(loader, launcher));
+
+    coDriverController.button(7).onTrue(turret.aimAt(Degrees.of(-45)));
+    coDriverController.button(8).onTrue(turret.aimAt(Degrees.of(45)));
 
     // coDriverController.button(7).onTrue(launcher.startAtVoltage(Volts.of(6)));
     // coDriverController.button(8).onTrue(launcher.stopLauncher());
