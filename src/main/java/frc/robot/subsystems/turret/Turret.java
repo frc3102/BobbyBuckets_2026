@@ -51,4 +51,11 @@ public class Turret extends SubsystemBase {
           io.stepAngle(step);
         });
   }
+
+  public Command zeroPosition() {
+    return runOnce(
+        () -> {
+          io.zeroPosition();
+        });
+  }
 }

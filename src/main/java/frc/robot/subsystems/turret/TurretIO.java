@@ -16,6 +16,7 @@ public interface TurretIO {
     public Voltage appliedVolts = Volts.of(0);
     public Current currentAmps = Amps.of(0);
     public Temperature temp = Celsius.of(0);
+    public Angle target = Degrees.of(0);
   }
 
   public default void updateInputs(TurretIOInputs inputs) {}

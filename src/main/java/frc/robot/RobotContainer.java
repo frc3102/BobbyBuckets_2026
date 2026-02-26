@@ -179,13 +179,15 @@ public class RobotContainer {
     // coDriverController.button(10).onTrue(new StartShooter(loader, launcher));
     // coDriverController.button(11).onTrue(new StopShooter(loader, launcher));
 
-    coDriverController.button(7).onTrue(turret.aimAt(Degrees.of(-45)));
-    coDriverController.button(8).onTrue(turret.aimAt(Degrees.of(45)));
+    coDriverController.button(7).onTrue(turret.rotate(Degrees.of(-10)));
+    coDriverController.button(8).onTrue(turret.rotate(Degrees.of(10)));
 
     // coDriverController.button(7).onTrue(launcher.startAtVoltage(Volts.of(6)));
     // coDriverController.button(8).onTrue(launcher.stopLauncher());
-    coDriverController.button(4).onTrue(loader.startLoader());
-    coDriverController.button(5).onTrue(loader.stopLoader());
+    // coDriverController.button(4).onTrue(loader.startLoader());
+    // coDriverController.button(5).onTrue(loader.stopLoader());
+    coDriverController.button(4).onTrue(turret.zeroPosition());
+    coDriverController.button(6).onTrue(turret.aimAt(Degrees.of(0)));
   }
 
   /**
