@@ -106,13 +106,8 @@ public class TurretIOTalonFX implements TurretIO {
       angle = TurretConstants.MIN_ANGLE;
     }
     targetAngle = angle;
-    System.out.println("Target: " + angle.in(Degrees));
-    System.out.println("Target rotations: " + angle.in(Rotations));
-    System.out.println(
-        "After gear ratio: " + Radians.of(angle.in(Rotations) * TurretConstants.GEAR_RATIO));
     var finalAngle = Rotations.of(angle.in(Rotations) * TurretConstants.GEAR_RATIO);
-    System.out.println("Final Angle: " + finalAngle);
-    // turret.setControl(positionRequest.withPosition(finalAngle));
+
     turret.setControl(mmRequest.withPosition(finalAngle));
   }
 
