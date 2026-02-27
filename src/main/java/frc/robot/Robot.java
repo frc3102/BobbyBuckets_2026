@@ -127,6 +127,7 @@ public class Robot extends LoggedRobot {
       }
       autoMessagePrinted = true;
     }
+    robotContainer.periodic();
     // Return to non-RT thread priority (do not modify the first argument)
     // Threads.setCurrentThreadPriority(false, 10);
     LoggedTracer.record("RobotPeriodic");
@@ -138,7 +139,9 @@ public class Robot extends LoggedRobot {
 
   /** This function is called periodically when disabled. */
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    robotContainer.disabledPeriodic();
+  }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override

@@ -16,8 +16,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.lib.team6328.util.LoggedTracer;
 import frc.robot.commands.DriveCommands;
+import frc.robot.game.GameState;
+import frc.robot.game.GameStateIO;
+import frc.robot.game.GameStateIORobot;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.controls.Haptics;
+import frc.robot.subsystems.controls.HapticsIO;
+import frc.robot.subsystems.controls.HapticsIOXboxController;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
@@ -58,6 +65,9 @@ public class RobotContainer {
   private final Loader loader;
   // private final Launcher launcher;
   private final Turret turret;
+  private final Haptics haptics;
+
+  private final GameState gameState;
 
   // Controller
   private final CommandXboxController driverController = new CommandXboxController(0);
@@ -89,7 +99,8 @@ public class RobotContainer {
         loader = new Loader(new LoaderIOTalonFX());
         // launcher = new Launcher(new LauncherIOTalonFX());
         turret = new Turret(new TurretIOTalonFX());
-
+        gameState = new GameState(new GameStateIORobot());
+        haptics = new Haptics(new HapticsIOXboxController(driverController));
         break;
 
       case SIM:
@@ -111,6 +122,8 @@ public class RobotContainer {
         loader = new Loader(new LoaderIOTalonFX());
         // launcher = new Launcher(new LauncherIOTalonFX());
         turret = new Turret(new TurretIOTalonFX());
+        gameState = new GameState(new GameStateIORobot());
+        haptics = new Haptics(new HapticsIOXboxController(driverController));
         break;
 
       default:
@@ -128,7 +141,8 @@ public class RobotContainer {
         loader = new Loader(new LoaderIO() {});
         // launcher = new Launcher(new LauncherIO() {});
         turret = new Turret(new TurretIO() {});
-
+        gameState = new GameState(new GameStateIO() {});
+        haptics = new Haptics(new HapticsIO() {});
         break;
     }
 
@@ -153,6 +167,16 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
+  }
+
+  public void periodic() {
+    gameState.periodic();
+    LoggedTracer.record("RobotContainer");
+  }
+
+  public void disabledPeriodic() {
+    gameState.periodic();
+    LoggedTracer.record("DisabledRobotContainer");
   }
 
   /**
