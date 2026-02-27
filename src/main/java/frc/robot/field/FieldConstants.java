@@ -2,7 +2,9 @@ package frc.robot.field;
 
 import static edu.wpi.first.units.Units.*;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rectangle2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.units.measure.Distance;
 
@@ -15,8 +17,10 @@ public class FieldConstants {
 
   public static final Translation2d BLUE_HUB =
       new Translation2d(Inches.of(182.11), Inches.of(158.84));
+  public static final Pose2d BLUE_HUB_POSE = new Pose2d(BLUE_HUB, Rotation2d.kZero);
   public static final Translation2d RED_HUB =
       new Translation2d(FIELD_WIDTH.minus(Inches.of(182.11)), Inches.of(158.84));
+  public static final Pose2d RED_HUB_POSE = new Pose2d(RED_HUB, Rotation2d.kZero);
   public static final Rectangle2d BLUE_ZONE =
       new Rectangle2d(new Translation2d(0, 0), new Translation2d(Inches.of(156.61), FIELD_HEIGHT));
   public static final Rectangle2d RED_ZONE =

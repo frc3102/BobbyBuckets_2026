@@ -3,7 +3,6 @@ package frc.robot.subsystems.turret;
 import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.SignalLogger;
-
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -74,5 +73,4 @@ public class Turret extends SubsystemBase {
   public boolean isAtExtent() {
     return inputs.target == TurretConstants.MIN_ANGLE || inputs.target == TurretConstants.MAX_ANGLE;
   }
-
 }
