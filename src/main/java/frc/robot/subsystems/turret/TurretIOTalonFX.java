@@ -99,7 +99,6 @@ public class TurretIOTalonFX implements TurretIO {
 
   @Override
   public void setAngle(Angle angle) {
-    System.out.println("Requested: " + angle.in(Degrees));
     if (angle.gt(TurretConstants.MAX_ANGLE)) {
       angle = TurretConstants.MAX_ANGLE;
     } else if (angle.lt(TurretConstants.MIN_ANGLE)) {

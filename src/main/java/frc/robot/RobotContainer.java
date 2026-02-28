@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.lib.team6328.util.LoggedTracer;
+import frc.robot.commands.Autoaim;
 import frc.robot.commands.DriveCommands;
 import frc.robot.game.GameState;
 import frc.robot.game.GameStateIO;
@@ -37,6 +38,9 @@ import frc.robot.subsystems.intake.feed.IntakeFeedIOTalonFX;
 import frc.robot.subsystems.intake.tilt.IntakeTilt;
 import frc.robot.subsystems.intake.tilt.IntakeTiltIO;
 import frc.robot.subsystems.intake.tilt.IntakeTiltIOTalonFX;
+import frc.robot.subsystems.launcher.Launcher;
+import frc.robot.subsystems.launcher.LauncherIO;
+import frc.robot.subsystems.launcher.LauncherIOTalonFX;
 import frc.robot.subsystems.loader.Loader;
 import frc.robot.subsystems.loader.LoaderIO;
 import frc.robot.subsystems.loader.LoaderIOTalonFX;
@@ -63,7 +67,7 @@ public class RobotContainer {
   private final IntakeFeed intakeFeed;
   private final IntakeTilt intakeTilt;
   private final Loader loader;
-  // private final Launcher launcher;
+  private final Launcher launcher;
   private final Turret turret;
   private final Haptics haptics;
 
@@ -97,7 +101,7 @@ public class RobotContainer {
         intakeFeed = new IntakeFeed(new IntakeFeedIOTalonFX());
         intakeTilt = new IntakeTilt(new IntakeTiltIOTalonFX());
         loader = new Loader(new LoaderIOTalonFX());
-        // launcher = new Launcher(new LauncherIOTalonFX());
+        launcher = new Launcher(new LauncherIOTalonFX());
         turret = new Turret(new TurretIOTalonFX());
         gameState = new GameState(new GameStateIORobot());
         haptics = new Haptics(new HapticsIOXboxController(driverController));
@@ -120,7 +124,7 @@ public class RobotContainer {
         intakeFeed = new IntakeFeed(new IntakeFeedIOTalonFX());
         intakeTilt = new IntakeTilt(new IntakeTiltIOTalonFX());
         loader = new Loader(new LoaderIOTalonFX());
-        // launcher = new Launcher(new LauncherIOTalonFX());
+        launcher = new Launcher(new LauncherIOTalonFX());
         turret = new Turret(new TurretIOTalonFX());
         gameState = new GameState(new GameStateIORobot());
         haptics = new Haptics(new HapticsIOXboxController(driverController));
@@ -139,7 +143,7 @@ public class RobotContainer {
         intakeFeed = new IntakeFeed(new IntakeFeedIO() {});
         intakeTilt = new IntakeTilt(new IntakeTiltIO() {});
         loader = new Loader(new LoaderIO() {});
-        // launcher = new Launcher(new LauncherIO() {});
+        launcher = new Launcher(new LauncherIO() {});
         turret = new Turret(new TurretIO() {});
         gameState = new GameState(new GameStateIO() {});
         haptics = new Haptics(new HapticsIO() {});
@@ -212,6 +216,8 @@ public class RobotContainer {
     // coDriverController.button(5).onTrue(loader.stopLoader());
     coDriverController.button(4).onTrue(turret.zeroPosition());
     coDriverController.button(6).onTrue(turret.aimAt(Degrees.of(0)));
+
+    coDriverController.button(1).whileTrue(new Autoaim(gameState, drive::getPose, turret, launcher, loader, drive::getChassisSpeeds));
   }
 
   /**
