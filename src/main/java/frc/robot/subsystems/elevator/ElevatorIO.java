@@ -28,7 +28,7 @@ public interface ElevatorIO {
 
   public default void updateInputs(ElevatorIOInputs inputs) {}
 
-  public default void setPosition(Distance height) {}
+  public default void setPosition(Angle position) {}
 
   public default void zeroElevator() {}
 

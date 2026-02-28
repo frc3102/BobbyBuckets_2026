@@ -5,14 +5,13 @@ import static edu.wpi.first.units.Units.*;
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.DynamicMotionMagicExpoVoltage;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.ParentDevice;
 import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
-import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
 import frc.lib.team3061.sim.ElevatorSystemSim;
@@ -47,14 +46,16 @@ public class ElevatorIOTalonFX implements ElevatorIO {
       new LoggedTunableNumber("Elevator/kV", ElevatorConstants.Motor.KV);
   private final LoggedTunableNumber motorKA =
       new LoggedTunableNumber("Elevator/kA", ElevatorConstants.Motor.KA);
-  private final LoggedTunableNumber motorKVExpo =
-      new LoggedTunableNumber("Elevator/kV_Expo", ElevatorConstants.Motor.KV_EXPO);
-  private final LoggedTunableNumber motorKAExpo =
-      new LoggedTunableNumber("Elevator/kA_Expo", ElevatorConstants.Motor.KA_EXPO);
+  private final LoggedTunableNumber motorMMCruise =
+      new LoggedTunableNumber("Elevator/MM_CV", ElevatorConstants.Motor.MM_CV);
+  private final LoggedTunableNumber motorMMAccel =
+      new LoggedTunableNumber("Elevator/MM_A", ElevatorConstants.Motor.MM_A);
+  private final LoggedTunableNumber motorMMJerk =
+      new LoggedTunableNumber("Elevator/MM_A", ElevatorConstants.Motor.MM_JERK);
 
   private final ElevatorSystemSim elevatorSim;
 
-  private final DynamicMotionMagicExpoVoltage positionRequest;
+  private final MotionMagicVoltage positionRequest;
   private final VoltageOut voltageRequest;
 
   public ElevatorIOTalonFX() {
@@ -79,11 +80,11 @@ public class ElevatorIOTalonFX implements ElevatorIO {
     config.Slot0.kS = motorKS.get();
     config.Slot0.kG = motorKG.get();
     config.Slot0.kV = motorKV.get();
-    config.MotionMagic.MotionMagicExpo_kA = motorKAExpo.get();
-    config.MotionMagic.MotionMagicExpo_kV = motorKVExpo.get();
-    config.MotionMagic.MotionMagicCruiseVelocity = 0;
+    config.MotionMagic.MotionMagicAcceleration = motorMMAccel.get();
+    config.MotionMagic.MotionMagicCruiseVelocity = motorMMCruise.get();
+    config.MotionMagic.MotionMagicJerk = motorMMJerk.get();
     PhoenixUtil.tryUntilOk(5, () -> elevator.getConfigurator().apply(config, 0.25));
-    positionRequest = new DynamicMotionMagicExpoVoltage(0, motorKVExpo.get(), motorKAExpo.get());
+    positionRequest = new MotionMagicVoltage(0);
     voltageRequest = new VoltageOut(0);
 
     zeroElevator();
@@ -102,12 +103,9 @@ public class ElevatorIOTalonFX implements ElevatorIO {
   }
 
   @Override
-  public void setPosition(Distance height) {
-    elevator.setControl(
-        positionRequest.withPosition(
-            height.in(Inches)
-                * ElevatorConstants.GEAR_RATIO
-                / ElevatorConstants.Mechanism.PULLEY_CIRCUMFERENCE.in(Inches)));
+  public void setPosition(Angle position) {
+    System.out.println("Pos: " + position);
+    elevator.setControl(positionRequest.withPosition(position));
   }
 
   @Override

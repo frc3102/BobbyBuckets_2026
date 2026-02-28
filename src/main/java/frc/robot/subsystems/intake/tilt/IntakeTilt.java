@@ -1,6 +1,6 @@
 package frc.robot.subsystems.intake.tilt;
 
-import static edu.wpi.first.units.Units.Radians;
+import static edu.wpi.first.units.Units.Rotations;
 import static edu.wpi.first.units.Units.Second;
 import static edu.wpi.first.units.Units.Volts;
 
@@ -40,14 +40,14 @@ public class IntakeTilt extends SubsystemBase {
   public Command extendHopper() {
     return runOnce(
         () -> {
-          io.setAngle(IntakeTiltConstants.EXTENDED_POSITION);
+          io.setAngle(Rotations.of(IntakeTiltConstants.OUT_POSITION));
         });
   }
 
   public Command retractHopper() {
     return runOnce(
         () -> {
-          io.setAngle(Radians.of(0));
+          io.setAngle(Rotations.of(IntakeTiltConstants.IN_POSITION));
         });
   }
 }

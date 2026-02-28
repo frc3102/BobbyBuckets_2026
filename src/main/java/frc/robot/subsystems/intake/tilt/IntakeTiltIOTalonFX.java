@@ -45,6 +45,12 @@ public class IntakeTiltIOTalonFX implements IntakeTiltIO {
   private final LoggedTunableNumber motorKA =
       new LoggedTunableNumber("IntakeTilt/kA", IntakeTiltConstants.Motor.KA);
 
+  private final LoggedTunableNumber motorMM_CV =
+      new LoggedTunableNumber("IntakeTilt/MM_CV", IntakeTiltConstants.Motor.MM_CV);
+  private final LoggedTunableNumber motorMM_A =
+      new LoggedTunableNumber("IntakeTilt/MM_A", IntakeTiltConstants.Motor.MM_A);
+  private final LoggedTunableNumber motorMM_Jerk =
+      new LoggedTunableNumber("IntakeTilt/kA", IntakeTiltConstants.Motor.MM_JERK);
   private final ArmSystemSim tiltSim;
 
   public IntakeTiltIOTalonFX() {
@@ -61,6 +67,9 @@ public class IntakeTiltIOTalonFX implements IntakeTiltIO {
     tiltConfig.Slot0.kG = motorKG.get();
     tiltConfig.Slot0.kV = motorKV.get();
     tiltConfig.Slot0.kA = motorKA.get();
+    tiltConfig.MotionMagic.MotionMagicCruiseVelocity = motorMM_CV.get();
+    tiltConfig.MotionMagic.MotionMagicAcceleration = motorMM_A.get();
+    tiltConfig.MotionMagic.MotionMagicJerk = motorMM_Jerk.get();
 
     tryUntilOk(5, () -> tilt.getConfigurator().apply(tiltConfig, 0.25));
     BaseStatusSignal.setUpdateFrequencyForAll(
@@ -79,8 +88,7 @@ public class IntakeTiltIOTalonFX implements IntakeTiltIO {
 
   @Override
   public void setAngle(Angle angle) {
-
-    tilt.setControl(voltageRequest.withPosition(angle.times(IntakeTiltConstants.GEAR_RATIO)));
+    tilt.setControl(voltageRequest.withPosition(angle));
   }
 
   @Override

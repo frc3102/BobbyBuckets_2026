@@ -8,8 +8,8 @@ import edu.wpi.first.units.measure.Distance;
 public class TurretConstants {
 
   public static final int CAN_ID = 15;
-  public static final Angle MAX_ANGLE = Degrees.of(10);
-  public static final Angle MIN_ANGLE = Degrees.of(-180);
+  public static final Angle MAX_ANGLE = Degrees.of(20);
+  public static final Angle MIN_ANGLE = Degrees.of(-190);
   public static final double GEAR_RATIO = 17.0 / 3.0;
 
   public static class Position {

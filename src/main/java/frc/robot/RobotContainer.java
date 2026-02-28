@@ -8,7 +8,6 @@
 package frc.robot;
 
 import static edu.wpi.first.units.Units.Degrees;
-import static edu.wpi.first.units.Units.Volts;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -35,6 +34,10 @@ import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
+import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.elevator.ElevatorConstants;
+import frc.robot.subsystems.elevator.ElevatorIO;
+import frc.robot.subsystems.elevator.ElevatorIOTalonFX;
 import frc.robot.subsystems.intake.feed.IntakeFeed;
 import frc.robot.subsystems.intake.feed.IntakeFeedIO;
 import frc.robot.subsystems.intake.feed.IntakeFeedIOTalonFX;
@@ -73,6 +76,7 @@ public class RobotContainer {
   private final Launcher launcher;
   private final Turret turret;
   private final Haptics haptics;
+  private final Elevator elevator;
 
   private final GameState gameState;
 
@@ -108,6 +112,7 @@ public class RobotContainer {
         turret = new Turret(new TurretIOTalonFX());
         gameState = new GameState(new GameStateIORobot());
         haptics = new Haptics(new HapticsIOXboxController(driverController));
+        elevator = new Elevator(new ElevatorIOTalonFX());
         break;
 
       case SIM:
@@ -131,6 +136,7 @@ public class RobotContainer {
         turret = new Turret(new TurretIOTalonFX());
         gameState = new GameState(new GameStateIORobot());
         haptics = new Haptics(new HapticsIOXboxController(driverController));
+        elevator = new Elevator(new ElevatorIOTalonFX());
         break;
 
       default:
@@ -150,6 +156,8 @@ public class RobotContainer {
         turret = new Turret(new TurretIO() {});
         gameState = new GameState(new GameStateIO() {});
         haptics = new Haptics(new HapticsIO() {});
+        elevator = new Elevator(new ElevatorIO() {});
+
         break;
     }
 
@@ -206,8 +214,13 @@ public class RobotContainer {
     driverController.x().onTrue(intakeTilt.extendHopper());
     driverController.y().onTrue(intakeTilt.retractHopper());
     driverController.back().onTrue(drive.zeroGyroscope());
+    driverController.povDown().onTrue(elevator.goToPosition(ElevatorConstants.BOTTOM_POSITION));
+    driverController.povUp().onTrue(elevator.goToPosition(ElevatorConstants.TOP_POSITION));
 
-    coDriverController.button(10).onTrue(new StartShooter(loader, launcher)).onFalse(new StopShooter(loader, launcher));
+    coDriverController
+        .button(10)
+        .onTrue(new StartShooter(loader, launcher))
+        .onFalse(new StopShooter(loader, launcher));
     // coDriverController.button(11).onTrue(new StopShooter(loader, launcher));
 
     coDriverController.button(7).onTrue(turret.rotate(Degrees.of(-10)));

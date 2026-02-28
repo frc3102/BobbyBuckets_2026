@@ -142,9 +142,9 @@ public class Autoaim extends Command {
       }
     }
     boolean canShoot = aimTurret(pose);
-    launcher.setShootAtDistance(Meters.of(distance));
 
     if (canShoot) {
+      launcher.setShootAtDistance(Meters.of(distance));
       loader.setVoltage(IntakeFeedConstants.VOLTAGE);
     }
   }

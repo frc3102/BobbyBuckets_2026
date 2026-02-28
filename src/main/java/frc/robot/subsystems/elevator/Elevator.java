@@ -51,17 +51,17 @@ public class Elevator extends SubsystemBase {
     return inputs.linearPosition;
   }
 
-  public boolean isAtPosition(Positions position) {
-    return atSetpointDebouncer.calculate(
-        getPosition()
-            .isNear(position.getHeight(), ElevatorConstants.Mechanism.LINEAR_POSITION_TOLERANCE));
-  }
+  // public boolean isAtPosition(Positions position) {
+  //   return atSetpointDebouncer.calculate(
+  //       getPosition()
+  //           .isNear(position.getPosition(),
+  // ElevatorConstants.Mechanism.LINEAR_POSITION_TOLERANCE));
+  // }
 
-  public Command goToPosition(Positions position) {
-    targetPosition = position;
+  public Command goToPosition(double position) {
     return runOnce(
         () -> {
-          io.setPosition(targetPosition.getHeight());
+          io.setPosition(Rotations.of(position));
         });
   }
 
