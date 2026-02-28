@@ -7,8 +7,8 @@ import edu.wpi.first.units.measure.Angle;
 public class IntakeTiltConstants {
   public static final int CAN_ID = 5;
 
-  public static final int GEAR_RATIO = 9;
-  public static final Angle EXTENDED_POSITION = Degrees.of(45);
+  public static final int GEAR_RATIO = 180;
+  public static final Angle EXTENDED_POSITION = Degrees.of(120);
 
   public static class Motor {
     public static final double KP = 2.;

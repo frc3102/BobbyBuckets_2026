@@ -7,7 +7,7 @@ import edu.wpi.first.units.measure.Mass;
 import edu.wpi.first.units.measure.Voltage;
 
 public class ElevatorConstants {
-  public static final int CAN_ID = -1;
+  public static final int CAN_ID = 21;
   public static final double GEAR_RATIO = 1;
 
   public static class Mechanism {
