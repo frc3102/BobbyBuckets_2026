@@ -217,7 +217,11 @@ public class RobotContainer {
     coDriverController.button(4).onTrue(turret.zeroPosition());
     coDriverController.button(6).onTrue(turret.aimAt(Degrees.of(0)));
 
-    coDriverController.button(1).whileTrue(new Autoaim(gameState, drive::getPose, turret, launcher, loader, drive::getChassisSpeeds));
+    coDriverController
+        .button(1)
+        .whileTrue(
+            new Autoaim(
+                gameState, drive::getPose, turret, launcher, loader, drive::getChassisSpeeds));
   }
 
   /**

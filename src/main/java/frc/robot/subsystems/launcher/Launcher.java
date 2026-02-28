@@ -64,7 +64,7 @@ public class Launcher extends SubsystemBase {
   public Command startAtDistance(Distance distance) {
     return runOnce(
         () -> {
-          //io.setTargetVelocity(speedForDistance(distance));
+          // io.setTargetVelocity(speedForDistance(distance));
           io.setVoltage(Volts.of(6));
         });
   }
