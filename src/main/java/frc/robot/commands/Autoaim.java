@@ -149,6 +149,13 @@ public class Autoaim extends Command {
     }
   }
 
+  @Override
+  public void end(boolean interrupted) {
+    turret.aimAt(Degrees.of(0));
+    loader.setVoltage(Volts.of(0));
+    launcher.startAtVoltage(Volts.of(0));
+  }
+
   private double normalizeAngle(double deg) {
     return ((deg + 180.0) % 360.0 + 360.0) % 360.0 - 180.0;
   }

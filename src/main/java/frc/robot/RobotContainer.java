@@ -8,6 +8,7 @@
 package frc.robot;
 
 import static edu.wpi.first.units.Units.Degrees;
+import static edu.wpi.first.units.Units.Volts;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -19,6 +20,8 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.lib.team6328.util.LoggedTracer;
 import frc.robot.commands.Autoaim;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.StartShooter;
+import frc.robot.commands.StopShooter;
 import frc.robot.game.GameState;
 import frc.robot.game.GameStateIO;
 import frc.robot.game.GameStateIORobot;
@@ -204,13 +207,13 @@ public class RobotContainer {
     driverController.y().onTrue(intakeTilt.retractHopper());
     driverController.back().onTrue(drive.zeroGyroscope());
 
-    // coDriverController.button(10).onTrue(new StartShooter(loader, launcher));
+    coDriverController.button(10).onTrue(new StartShooter(loader, launcher)).onFalse(new StopShooter(loader, launcher));
     // coDriverController.button(11).onTrue(new StopShooter(loader, launcher));
 
     coDriverController.button(7).onTrue(turret.rotate(Degrees.of(-10)));
     coDriverController.button(8).onTrue(turret.rotate(Degrees.of(10)));
 
-    // coDriverController.button(7).onTrue(launcher.startAtVoltage(Volts.of(6)));
+    // coDriverController.button(7).onTrue(launcher.startAtVoltage(Volts.of(6))).onFalse(launcher.stopLauncher());
     // coDriverController.button(8).onTrue(launcher.stopLauncher());
     // coDriverController.button(4).onTrue(loader.startLoader());
     // coDriverController.button(5).onTrue(loader.stopLoader());
