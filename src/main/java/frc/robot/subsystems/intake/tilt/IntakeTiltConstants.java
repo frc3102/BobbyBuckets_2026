@@ -5,7 +5,7 @@ import static edu.wpi.first.units.Units.Degrees;
 import edu.wpi.first.units.measure.Angle;
 
 public class IntakeTiltConstants {
-  public static final int CAN_ID = 5;
+  public static final int CAN_ID = 24;
 
   public static final int GEAR_RATIO = 180;
   public static final Angle EXTENDED_POSITION = Degrees.of(120);

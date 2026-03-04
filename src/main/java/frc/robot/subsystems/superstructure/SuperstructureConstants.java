@@ -12,7 +12,7 @@ public class SuperstructureConstants {
 
   public static class Conveyor {
     public static final Voltage VOLTAGE = Volts.of(6);
-    public static final int CAN_ID = 10;
+    public static final int CAN_ID = 23;
     public static final double GEAR_RATIO = 3;
     public static final AngularVelocity DEFAULT_VELOCITY = RotationsPerSecond.of(50);
 
@@ -34,7 +34,7 @@ public class SuperstructureConstants {
 
   public static class Kicker {
     public static final Voltage VOLTAGE = Volts.of(6);
-    public static final int CAN_ID = -1;
+    public static final int CAN_ID = 13;
     public static final double GEAR_RATIO = 3;
     public static final AngularVelocity DEFAULT_VELOCITY = RotationsPerSecond.of(50);
 
@@ -54,7 +54,7 @@ public class SuperstructureConstants {
   }
 
   public static class Shooter {
-    public static final int CAN_ID_LEADER = 13;
+    public static final int CAN_ID_LEADER = 22;
     public static final int CAN_ID_FOLLOWER = 14;
 
     public static final boolean LEADER_INVERTED = false;
