@@ -10,17 +10,10 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.field.FieldConstants;
 import frc.robot.game.GameState;
-import frc.robot.subsystems.intake.feed.IntakeFeedConstants;
-import frc.robot.subsystems.launcher.Launcher;
-import frc.robot.subsystems.loader.Loader;
-import frc.robot.subsystems.turret.Turret;
-import frc.robot.subsystems.turret.TurretConstants;
 
 public class Autoaim extends Command {
   private PoseSupplier poseSupplier;
   private ChassisSpeedsSupplier chassisSpeedsSupplier;
-  private Turret turret;
-  private Launcher launcher;
 
   private double distance = 0.0;
   private double rawBearing = 0.0;
@@ -28,7 +21,6 @@ public class Autoaim extends Command {
   private double leadAngle = 0.0;
 
   private Translation2d target;
-  private Loader loader;
   private GameState gameState;
 
   private static final double MOVING_THRESHOLD_MPS = 0.3;
@@ -38,19 +30,10 @@ public class Autoaim extends Command {
   private static final double FLIGHT_TIME_PER_METER = 0.08;
 
   public Autoaim(
-      GameState gameState,
-      PoseSupplier poseSupplier,
-      Turret turret,
-      Launcher launcher,
-      Loader loader,
-      ChassisSpeedsSupplier chassisSpeedsSupplier) {
+      GameState gameState, PoseSupplier poseSupplier, ChassisSpeedsSupplier chassisSpeedsSupplier) {
     this.gameState = gameState;
     this.poseSupplier = poseSupplier;
-    this.turret = turret;
-    this.launcher = launcher;
-    this.loader = loader;
     this.chassisSpeedsSupplier = chassisSpeedsSupplier;
-    addRequirements(turret, launcher, loader);
   }
 
   @Override
@@ -63,13 +46,13 @@ public class Autoaim extends Command {
     }
   }
 
-  private boolean aimTurret(Pose2d pose) {
+  private void aimTurret(Pose2d pose) {
 
     double headingRad = pose.getRotation().getRadians();
     double cosH = Math.cos(headingRad);
     double sinH = Math.sin(headingRad);
-    double turretXOffset = TurretConstants.Position.X_CENTER.in(Meters);
-    double turretYOffset = TurretConstants.Position.Y_CENTER.in(Meters);
+    double turretXOffset = 0; // TurretConstants.Position.X_CENTER.in(Meters);
+    double turretYOffset = 0; // TurretConstants.Position.Y_CENTER.in(Meters);
     double turretX = pose.getX() + turretXOffset * cosH - turretYOffset * sinH;
     double turretY = pose.getY() + turretXOffset * sinH + turretYOffset * cosH;
 
@@ -117,11 +100,7 @@ public class Autoaim extends Command {
       leadAngle = 0.0;
     }
 
-    turret.aimAt(Degrees.of(turretAngle));
-    if (turret.isAtExtent()) {
-      return false;
-    }
-    return true;
+    // TODO swerve aim at target
   }
 
   @Override
@@ -130,30 +109,19 @@ public class Autoaim extends Command {
 
     if (gameState.getAlliance() == Alliance.Blue) {
       if (!FieldConstants.BLUE_ZONE.contains(pose.getTranslation())) {
-        launcher.startAtVoltage(Volts.of(0));
-        loader.setVoltage(Volts.of(0));
         return;
       }
     } else {
       if (!FieldConstants.RED_ZONE.contains(pose.getTranslation())) {
-        launcher.startAtVoltage(Volts.of(0));
-        loader.setVoltage(Volts.of(0));
         return;
       }
     }
-    boolean canShoot = aimTurret(pose);
-
-    if (canShoot) {
-      launcher.setShootAtDistance(Meters.of(distance));
-      loader.setVoltage(IntakeFeedConstants.VOLTAGE);
-    }
+    aimTurret(pose);
   }
 
   @Override
   public void end(boolean interrupted) {
-    turret.aimAt(Degrees.of(0));
-    loader.setVoltage(Volts.of(0));
-    launcher.startAtVoltage(Volts.of(0));
+    // TODO swerve aim
   }
 
   private double normalizeAngle(double deg) {
