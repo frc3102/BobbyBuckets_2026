@@ -14,16 +14,16 @@ public class SuperstructureConstants {
     public static final Voltage VOLTAGE = Volts.of(6);
     public static final int CAN_ID = 23;
     public static final double GEAR_RATIO = 3;
-    public static final AngularVelocity DEFAULT_VELOCITY = RotationsPerSecond.of(50);
+    public static final AngularVelocity DEFAULT_VELOCITY = RotationsPerSecond.of(7);
 
     public static class Motor {
-      public static final double KP = 2.;
+      public static final double KP = .11;
       public static final double KI = 0;
       public static final double KD = 0;
-      public static final double KS = 0.2;
+      public static final double KS = 0.25;
       public static final double KG = 0;
-      public static final double KV = 0;
-      public static final double KA = 0;
+      public static final double KV = .120;
+      public static final double KA = 0.01;
 
       public static final double MM_A = 400;
       public static final double MM_JERK = 4000;
@@ -36,7 +36,7 @@ public class SuperstructureConstants {
     public static final Voltage VOLTAGE = Volts.of(6);
     public static final int CAN_ID = 13;
     public static final double GEAR_RATIO = 3;
-    public static final AngularVelocity DEFAULT_VELOCITY = RotationsPerSecond.of(50);
+    public static final AngularVelocity DEFAULT_VELOCITY = RotationsPerSecond.of(-20);
 
     public static class Motor {
       public static final double KP = 0.11;

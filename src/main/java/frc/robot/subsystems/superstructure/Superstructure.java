@@ -29,13 +29,13 @@ public class Superstructure extends SubsystemBase {
   private AngularVelocity rpsForDistance(Distance distance) {
     var feet = distance.in(Feet);
     if (feet <= 5) {
-      return RotationsPerSecond.of(100);
+      return RotationsPerSecond.of(40);
     } else if (feet <= 7) {
-      return RotationsPerSecond.of(200);
+      return RotationsPerSecond.of(50);
     } else if (feet <= 10) {
-      return RotationsPerSecond.of(300);
+      return RotationsPerSecond.of(60);
     } else {
-      return RotationsPerSecond.of(400);
+      return RotationsPerSecond.of(70);
     }
   }
 
