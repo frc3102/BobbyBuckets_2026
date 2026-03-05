@@ -7,59 +7,29 @@
         {
           "type": "path",
           "data": {
-            "pathName": "A Ball Side Shoot"
+            "pathName": "Outpost Side Back Up and Score"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "TiltOut"
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "B Ball Side to NZ"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "start intake"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "C Ball Side Intake"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "stop intake"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "D Ball Side After Intake"
-          }
-        },
-        {
-          "type": "parallel",
+          "type": "race",
           "data": {
             "commands": [
               {
                 "type": "named",
                 "data": {
-                  "name": "Raise Elevator"
+                  "name": "AimAtHub"
                 }
               },
               {
-                "type": "path",
+                "type": "wait",
                 "data": {
-                  "pathName": "E Ball Side Climb"
+                  "waitTime": 1.0
                 }
               }
             ]
@@ -68,13 +38,38 @@
         {
           "type": "named",
           "data": {
-            "name": "Climb"
+            "name": "ShootAtHub"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 5.0
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Shoot From Climb"
+            "name": "StopShooter"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Outpost Side Climb"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ElevatorUp"
+                }
+              }
+            ]
           }
         }
       ]

@@ -11,52 +11,46 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "named",
+          "data": {
+            "name": "TiltOut"
+          }
+        },
+        {
+          "type": "race",
           "data": {
             "commands": [
               {
                 "type": "named",
                 "data": {
-                  "name": "Shoot"
+                  "name": "AimAtHub"
                 }
               },
               {
-                "type": "named",
+                "type": "wait",
                 "data": {
-                  "name": "start intake"
+                  "waitTime": 1.0
                 }
               }
             ]
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "aa middle after shoot"
+            "name": "ShootAtHub"
           }
         },
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "aa after intake back"
+            "waitTime": 5.0
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Raise Elevator"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "aa midle climb"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Climb"
+            "name": "StopShooter"
           }
         }
       ]

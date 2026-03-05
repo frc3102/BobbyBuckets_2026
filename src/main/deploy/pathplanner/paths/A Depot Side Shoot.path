@@ -3,53 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.563637440758294,
-        "y": 7.215947867298578
+        "x": 3.5523104265402843,
+        "y": 7.678045023696681
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3139204063271843,
-        "y": 7.204056579944717
-      },
-      "isLocked": false,
-      "linkedName": "End NZ Intake"
-    },
-    {
-      "anchor": {
-        "x": 1.3600355450236963,
-        "y": 7.355651658767772
-      },
-      "prevControl": {
-        "x": 1.6611278586159401,
-        "y": 7.355651658767772
-      },
-      "nextControl": {
-        "x": 1.1100355450236963,
-        "y": 7.355651658767772
+        "x": 2.795607142857143,
+        "y": 7.295880952380952
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.0483886255924169,
-        "y": 4.712026066350711
+        "x": 2.0721666666666674,
+        "y": 7.187904761904762
       },
       "prevControl": {
-        "x": 1.0483886255924169,
-        "y": 4.432618483412323
+        "x": 2.6876309523809527,
+        "y": 7.155511904761904
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Ball Side Shooting"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.55,
-      "rotationDegrees": 0.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -63,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -49.57816193634289
   },
   "reversed": false,
   "folder": null,

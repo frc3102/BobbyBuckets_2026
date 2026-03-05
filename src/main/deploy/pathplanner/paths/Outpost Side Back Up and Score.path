@@ -3,37 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.0721666666666674,
-        "y": 7.187904761904762
+        "x": 3.5622380952380954,
+        "y": 0.43939285714285803
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.0721666666666674,
-        "y": 7.187904761904762
+        "x": 2.9791666666666674,
+        "y": 0.9576785714285723
       },
       "isLocked": false,
-      "linkedName": "Ball Side Shooting"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.227594786729859,
-        "y": 7.387890995260664
+        "x": 2.3745000000000003,
+        "y": 1.42197619047619
       },
       "prevControl": {
-        "x": 6.227594786729859,
-        "y": 7.387890995260664
+        "x": 2.7200238095238105,
+        "y": 0.9900714285714287
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Ball Side NZ"
+      "linkedName": "Outpost Side After Shoot"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.600662800331408,
-      "rotationDegrees": 0.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -47,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 49.573921259900864
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -49.57816193634289
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

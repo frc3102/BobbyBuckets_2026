@@ -8,6 +8,8 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -168,6 +170,7 @@ public class RobotContainer {
         "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
     ShootingCalculator.init(drive::getPose, drive::getChassisSpeeds, gameState);
+    registerNamedCommands();
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -194,6 +197,18 @@ public class RobotContainer {
     var target = calc.getNearestTrench();
     var delta = calc.update(target);
     return new Rotation2d(delta.angle());
+  }
+
+  public void registerNamedCommands() {
+    NamedCommands.registerCommand("ShootAtHub", superstructure.shootAtHub());
+    NamedCommands.registerCommand("StopShooter", superstructure.stop());
+    NamedCommands.registerCommand("AimAtHub", DriveCommands.joystickDriveAtAngle(drive, () -> 0, () -> 0, () -> getAngleToHub()));
+    NamedCommands.registerCommand("ElevatorUp", elevator.goToPosition(ElevatorConstants.TOP_POSITION));
+    NamedCommands.registerCommand("ElevatorDown", elevator.goToPosition(ElevatorConstants.BOTTOM_POSITION));
+    NamedCommands.registerCommand("TiltOut", intakeTilt.extendHopper());
+    NamedCommands.registerCommand("TiltIn", intakeTilt.retractHopper());
+    NamedCommands.registerCommand("IntakeStart", intakeFeed.startIntake());
+    NamedCommands.registerCommand("IntakeStop", intakeFeed.stopIntake());
   }
 
   /**
@@ -234,6 +249,7 @@ public class RobotContainer {
     driverController.back().onTrue(drive.zeroGyroscope());
     driverController.povDown().onTrue(elevator.goToPosition(ElevatorConstants.BOTTOM_POSITION));
     driverController.povUp().onTrue(elevator.goToPosition(ElevatorConstants.TOP_POSITION));
+    driverController.povRight().onTrue(elevator.goToPosition(ElevatorConstants.CLIMB_POSITION));
 
     coDriverController
         .button(10)
