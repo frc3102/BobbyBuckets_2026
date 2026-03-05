@@ -41,6 +41,7 @@ import frc.robot.subsystems.intake.tilt.IntakeTilt;
 import frc.robot.subsystems.intake.tilt.IntakeTiltIO;
 import frc.robot.subsystems.intake.tilt.IntakeTiltIOTalonFX;
 import frc.robot.subsystems.superstructure.Superstructure;
+import frc.robot.subsystems.superstructure.SuperstructureConstants;
 import frc.robot.subsystems.superstructure.SuperstructureIO;
 import frc.robot.subsystems.superstructure.SuperstructureIOTalonFX;
 import frc.robot.subsystems.vision.Vision;
@@ -49,6 +50,9 @@ import frc.robot.subsystems.vision.VisionIO;
 import frc.robot.subsystems.vision.VisionIOLimelight;
 import frc.robot.subsystems.vision.VisionIOPhotonVisionSim;
 import frc.robot.util.ShootingCalculator;
+
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -235,6 +239,10 @@ public class RobotContainer {
         .button(10)
         .onTrue(superstructure.shootAtHub())
         .onFalse(superstructure.stop());
+    coDriverController
+    .button(1)
+    .onTrue(superstructure.shootAtSpeed(RotationsPerSecond.of(SuperstructureConstants.Shooter.DEFAULT_SHOOT_SPEED)))
+    .onFalse(superstructure.stop());
     // coDriverController.button(11).onTrue(new StopShooter(loader, launcher));
 
     // coDriverController.button(7).onTrue(launcher.startAtVoltage(Volts.of(6))).onFalse(launcher.stopLauncher());
