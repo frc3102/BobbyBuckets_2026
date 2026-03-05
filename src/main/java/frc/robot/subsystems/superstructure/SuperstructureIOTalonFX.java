@@ -7,6 +7,7 @@ import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVelocityVoltage;
+import com.ctre.phoenix6.controls.NeutralOut;
 import com.ctre.phoenix6.hardware.ParentDevice;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
@@ -136,6 +137,7 @@ public class SuperstructureIOTalonFX implements SuperstructureIO {
   private MotionMagicVelocityVoltage conveyorVoltage = new MotionMagicVelocityVoltage(0);
   private MotionMagicVelocityVoltage kickerVoltage = new MotionMagicVelocityVoltage(0);
   private MotionMagicVelocityVoltage shooterVoltage = new MotionMagicVelocityVoltage(0);
+  private NeutralOut neutralOut = new NeutralOut();
 
   private final VelocitySystemSim conveyorSim;
   private final VelocitySystemSim kickerSim;
@@ -260,6 +262,14 @@ public class SuperstructureIOTalonFX implements SuperstructureIO {
   @Override
   public void setKickerRPS(AngularVelocity velocity) {
     kicker.setControl(kickerVoltage.withVelocity(velocity));
+  }
+
+  public void stopKicker() {
+    kicker.setControl(neutralOut);
+  }
+
+  public void stopShooter() {
+    shooterLeader.setControl(neutralOut);
   }
 
   @Override

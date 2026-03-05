@@ -1,19 +1,30 @@
 package frc.robot.subsystems.superstructure;
 
-import static edu.wpi.first.units.Units.Feet;
-import static edu.wpi.first.units.Units.RotationsPerSecond;
+import static edu.wpi.first.units.Units.*;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.interpolation.InterpolatingTreeMap;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.team6328.util.LoggedTracer;
+import frc.lib.team6328.util.LoggedTunableNumber;
 import frc.robot.util.ShootingCalculator;
 import org.littletonrobotics.junction.Logger;
 
 public class Superstructure extends SubsystemBase {
   private final SuperstructureIO io;
   private final SuperstructureIOInputsAutoLogged inputs = new SuperstructureIOInputsAutoLogged();
+
+  private final LoggedTunableNumber defaultShootSpeed =
+      new LoggedTunableNumber(
+          "Superstructure/Shooter/ManualShootSpeed",
+          SuperstructureConstants.Shooter.DEFAULT_SHOOT_SPEED);
+  private final LoggedTunableNumber defaultKickerSpeed =
+      new LoggedTunableNumber(
+          "Superstructure/Kicker/ManualKickSpeed",
+          SuperstructureConstants.Kicker.DEFAULT_VELOCITY.in(RotationsPerSecond));
 
   public Superstructure(SuperstructureIO io) {
     this.io = io;
@@ -27,16 +38,39 @@ public class Superstructure extends SubsystemBase {
   }
 
   private AngularVelocity rpsForDistance(Distance distance) {
-    var feet = distance.in(Feet);
-    if (feet <= 5) {
-      return RotationsPerSecond.of(40);
-    } else if (feet <= 7) {
-      return RotationsPerSecond.of(50);
-    } else if (feet <= 10) {
-      return RotationsPerSecond.of(60);
-    } else {
-      return RotationsPerSecond.of(70);
+    return getShootingMap().get(distance);
+  }
+
+  private static double inverseInterp(Distance start, Distance end, Distance q) {
+    return MathUtil.interpolate(start.in(Meters), end.in(Meters), q.in(Meters));
+  }
+
+  private static AngularVelocity interp(AngularVelocity s, AngularVelocity e, double q) {
+    return RotationsPerSecond.of(
+        MathUtil.interpolate(s.in(RotationsPerSecond), e.in(RotationsPerSecond), q));
+  }
+
+  private static InterpolatingTreeMap<Distance, AngularVelocity> shootingMap;
+
+  private static InterpolatingTreeMap<Distance, AngularVelocity> getShootingMap() {
+    if (shootingMap == null) {
+      var map =
+          new InterpolatingTreeMap<Distance, AngularVelocity>(
+              Superstructure::inverseInterp, Superstructure::interp);
+      map.put(Feet.of(5), RotationsPerSecond.of(30));
+      map.put(Feet.of(10), RotationsPerSecond.of(40));
+      shootingMap = map;
     }
+    return shootingMap;
+  }
+
+  public Command tuneSpeed() {
+    return runOnce(
+        () -> {
+          io.setShooterRPS(RotationsPerSecond.of(defaultShootSpeed.get()));
+          io.setKickerRPS((RotationsPerSecond.of(defaultKickerSpeed.get())));
+          io.setConveyorRPS(SuperstructureConstants.Conveyor.DEFAULT_VELOCITY);
+        });
   }
 
   public Command shootAtSpeed(AngularVelocity speed) {
@@ -64,8 +98,8 @@ public class Superstructure extends SubsystemBase {
     return runOnce(
         () -> {
           io.setConveyorRPS(RotationsPerSecond.of(0));
-          io.setKickerRPS(RotationsPerSecond.of(0));
-          io.setShooterRPS(RotationsPerSecond.of(0));
+          io.stopKicker();
+          io.stopShooter();
         });
   }
 }

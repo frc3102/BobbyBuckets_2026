@@ -163,6 +163,7 @@ public class RobotContainer {
     autoChooser.addOption(
         "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
+    ShootingCalculator.init(drive::getPose, drive::getChassisSpeeds, gameState);
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -180,6 +181,13 @@ public class RobotContainer {
   private Rotation2d getAngleToHub() {
     var calc = ShootingCalculator.getInstance();
     var target = calc.getHub();
+    var delta = calc.update(target);
+    return new Rotation2d(delta.angle());
+  }
+
+  private Rotation2d getAngleToTrench() {
+    var calc = ShootingCalculator.getInstance();
+    var target = calc.getNearestTrench();
     var delta = calc.update(target);
     return new Rotation2d(delta.angle());
   }
@@ -211,6 +219,14 @@ public class RobotContainer {
                 () -> -driverController.getLeftY(),
                 () -> -driverController.getLeftX(),
                 this::getAngleToHub));
+    driverController
+        .leftTrigger()
+        .whileTrue(
+            DriveCommands.joystickDriveAtAngle(
+                drive,
+                () -> -driverController.getLeftY(),
+                () -> -driverController.getLeftX(),
+                this::getAngleToTrench));
     driverController.back().onTrue(drive.zeroGyroscope());
     driverController.povDown().onTrue(elevator.goToPosition(ElevatorConstants.BOTTOM_POSITION));
     driverController.povUp().onTrue(elevator.goToPosition(ElevatorConstants.TOP_POSITION));

@@ -27,4 +27,14 @@ public class FieldConstants {
       new Rectangle2d(
           new Translation2d(FIELD_WIDTH, Inches.of(0)),
           new Translation2d(FIELD_WIDTH.minus(Inches.of(156.61)), FieldConstants.FIELD_HEIGHT));
+  public static final Translation2d BLUE_OUTPOST_TRENCH =
+      new Translation2d(Inches.of(156.61), Inches.of(100));
+  public static final Translation2d BLUE_DEPOT_TRENCH =
+      new Translation2d(Inches.of(156.61), Inches.of(FieldConstants.FIELD_HEIGHT.in(Inches) - 100));
+  public static final Translation2d RED_DEPOT_TRENCH =
+      new Translation2d(FIELD_WIDTH.minus(Inches.of(156.61)), Inches.of(100));
+  public static final Translation2d RED_OUTPOST_TRENCH =
+      new Translation2d(
+          FIELD_WIDTH.minus(Inches.of(156.61)),
+          Inches.of(FieldConstants.FIELD_HEIGHT.in(Inches) - 100));
 }

@@ -88,27 +88,29 @@ public class IntakeFeedIOTalonFX implements IntakeFeedIO {
     inputs.appliedVolts = intakeAppliedVolts.getValue();
     inputs.currentAmps = intakeCurrentAmps.getValue();
     inputs.temp = intakeCurrentTemp.getValue();
-    LoggedTunableNumber.ifChanged(
-        hashCode(),
-        motionMagic -> {
-          TalonFXConfiguration config = new TalonFXConfiguration();
-          this.intake.getConfigurator().refresh(config);
-          config.Slot0.kP = motionMagic[0];
-          config.Slot0.kI = motionMagic[1];
-          config.Slot0.kD = motionMagic[2];
-          config.Slot0.kS = motionMagic[3];
-          config.Slot0.kG = motionMagic[4];
-          config.Slot0.kA = motionMagic[5];
-          config.Slot0.kV = motionMagic[6];
-          this.intake.getConfigurator().apply(config);
-        },
-        motorKP,
-        motorKI,
-        motorKD,
-        motorKS,
-        motorKG,
-        motorKA,
-        motorKV);
+    if (Constants.TUNING_MODE) {
+      LoggedTunableNumber.ifChanged(
+          hashCode(),
+          motionMagic -> {
+            TalonFXConfiguration config = new TalonFXConfiguration();
+            this.intake.getConfigurator().refresh(config);
+            config.Slot0.kP = motionMagic[0];
+            config.Slot0.kI = motionMagic[1];
+            config.Slot0.kD = motionMagic[2];
+            config.Slot0.kS = motionMagic[3];
+            config.Slot0.kG = motionMagic[4];
+            config.Slot0.kA = motionMagic[5];
+            config.Slot0.kV = motionMagic[6];
+            this.intake.getConfigurator().apply(config);
+          },
+          motorKP,
+          motorKI,
+          motorKD,
+          motorKS,
+          motorKG,
+          motorKA,
+          motorKV);
+    }
     if (Constants.getMode() == Constants.Mode.SIM) {
       this.intakeSim.updateSim();
     }
