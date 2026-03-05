@@ -57,8 +57,8 @@ public class Superstructure extends SubsystemBase {
       var map =
           new InterpolatingTreeMap<Distance, AngularVelocity>(
               Superstructure::inverseInterp, Superstructure::interp);
-      map.put(Feet.of(5), RotationsPerSecond.of(30));
-      map.put(Feet.of(10), RotationsPerSecond.of(40));
+      map.put(Feet.of(6), RotationsPerSecond.of(30));
+      map.put(Feet.of(10), RotationsPerSecond.of(45));
       shootingMap = map;
     }
     return shootingMap;
