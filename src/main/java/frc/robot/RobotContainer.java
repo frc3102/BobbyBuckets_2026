@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -52,9 +54,6 @@ import frc.robot.subsystems.vision.VisionIO;
 import frc.robot.subsystems.vision.VisionIOLimelight;
 import frc.robot.subsystems.vision.VisionIOPhotonVisionSim;
 import frc.robot.util.ShootingCalculator;
-
-import static edu.wpi.first.units.Units.RotationsPerSecond;
-
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -256,9 +255,11 @@ public class RobotContainer {
         .onTrue(superstructure.shootAtHub())
         .onFalse(superstructure.stop());
     coDriverController
-    .button(1)
-    .onTrue(superstructure.shootAtSpeed(RotationsPerSecond.of(SuperstructureConstants.Shooter.DEFAULT_SHOOT_SPEED)))
-    .onFalse(superstructure.stop());
+        .button(1)
+        .onTrue(
+            superstructure.shootAtSpeed(
+                RotationsPerSecond.of(SuperstructureConstants.Shooter.DEFAULT_SHOOT_SPEED)))
+        .onFalse(superstructure.stop());
     // coDriverController.button(11).onTrue(new StopShooter(loader, launcher));
 
     // coDriverController.button(7).onTrue(launcher.startAtVoltage(Volts.of(6))).onFalse(launcher.stopLauncher());
