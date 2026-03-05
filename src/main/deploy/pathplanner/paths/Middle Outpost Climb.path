@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.3745000000000003,
-        "y": 1.42197619047619
+        "x": 2.188977272727273,
+        "y": 4.035
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.4243095238095247,
-        "y": 1.4759642857142854
+        "x": 2.2773214285714296,
+        "y": 2.90125
       },
       "isLocked": false,
-      "linkedName": "Outpost Side After Shoot"
+      "linkedName": "Middle Start/Shoot"
     },
     {
       "anchor": {
-        "x": 1.067988095238096,
-        "y": 2.231797619047619
+        "x": 1.0895833333333342,
+        "y": 2.21020238095238
       },
       "prevControl": {
-        "x": 1.067988095238096,
-        "y": 1.4381730324037938
+        "x": 1.6402619047619056,
+        "y": 2.21020238095238
       },
       "nextControl": {
-        "x": 1.067988095238096,
-        "y": 2.7824761904761908
+        "x": 0.8395833333333357,
+        "y": 2.21020238095238
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.067988095238096,
-        "y": 2.847261904761905
+        "x": 1.0895833333333342,
+        "y": 2.8796547619047614
       },
       "prevControl": {
-        "x": 1.0463928571428582,
-        "y": 2.21020238095238
+        "x": 1.0895833333333342,
+        "y": 2.5449285714285725
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,7 +47,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1,
-      "rotationDegrees": -179.30130561701654
+      "rotationDegrees": 180.0
     }
   ],
   "constraintZones": [],
@@ -63,13 +63,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -178.7787633182429
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 49.573921259900864
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

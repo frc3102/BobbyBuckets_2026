@@ -11,7 +11,6 @@ import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -148,7 +147,8 @@ public class RobotContainer {
 
         break;
     }
-
+    ShootingCalculator.init(drive::getPose, drive::getChassisSpeeds, gameState);
+    registerNamedCommands();
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
@@ -168,8 +168,7 @@ public class RobotContainer {
     autoChooser.addOption(
         "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
-    ShootingCalculator.init(drive::getPose, drive::getChassisSpeeds, gameState);
-    registerNamedCommands();
+    
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -201,9 +200,13 @@ public class RobotContainer {
   public void registerNamedCommands() {
     NamedCommands.registerCommand("ShootAtHub", superstructure.shootAtHub());
     NamedCommands.registerCommand("StopShooter", superstructure.stop());
-    NamedCommands.registerCommand("AimAtHub", DriveCommands.joystickDriveAtAngle(drive, () -> 0, () -> 0, () -> getAngleToHub()));
-    NamedCommands.registerCommand("ElevatorUp", elevator.goToPosition(ElevatorConstants.TOP_POSITION));
-    NamedCommands.registerCommand("ElevatorDown", elevator.goToPosition(ElevatorConstants.BOTTOM_POSITION));
+    NamedCommands.registerCommand(
+        "AimAtHub",
+        DriveCommands.joystickDriveAtAngle(drive, () -> 0, () -> 0, () -> getAngleToHub()));
+    NamedCommands.registerCommand(
+        "ElevatorUp", elevator.goToPosition(ElevatorConstants.TOP_POSITION));
+    NamedCommands.registerCommand(
+        "ElevatorDown", elevator.goToPosition(ElevatorConstants.BOTTOM_POSITION));
     NamedCommands.registerCommand("TiltOut", intakeTilt.extendHopper());
     NamedCommands.registerCommand("TiltIn", intakeTilt.retractHopper());
     NamedCommands.registerCommand("IntakeStart", intakeFeed.startIntake());
