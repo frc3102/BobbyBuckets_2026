@@ -198,9 +198,9 @@ public class RobotContainer {
   }
 
   public void registerNamedCommands() {
-    // NamedCommands.registerCommand("ShootAtHub", new ShootCommand(superstructure,
-    // RotationsPerSecond.of(45)));
-    NamedCommands.registerCommand("ShootAtHub", superstructure.shootAtHub());
+    NamedCommands.registerCommand(
+        "ShootAtHub", new ShootCommand(superstructure, RotationsPerSecond.of(45)));
+    // NamedCommands.registerCommand("ShootAtHub", superstructure.shootAtHub());
     NamedCommands.registerCommand("StopShooter", superstructure.stop());
     NamedCommands.registerCommand(
         "AimAtHub",
