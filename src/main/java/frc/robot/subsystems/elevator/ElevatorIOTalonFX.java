@@ -104,7 +104,6 @@ public class ElevatorIOTalonFX implements ElevatorIO {
 
   @Override
   public void setPosition(Angle position) {
-    System.out.println("Pos: " + position);
     elevator.setControl(positionRequest.withPosition(position));
   }
 

@@ -12,7 +12,7 @@ public class ElevatorConstants {
   public static final double GEAR_RATIO = 1;
 
   public static final double BOTTOM_POSITION = 0;
-  public static final double TOP_POSITION = 40;
+  public static final double TOP_POSITION = 44.5;
   public static final double CLIMB_POSITION = 20;
 
   public static class Mechanism {

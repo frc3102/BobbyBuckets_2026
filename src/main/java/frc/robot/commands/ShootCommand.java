@@ -19,6 +19,7 @@ public class ShootCommand extends Command {
   @Override
   public void end(boolean interrupted) {
     superstructure.stopAll();
+    atSpeed = false;
   }
 
   @Override
