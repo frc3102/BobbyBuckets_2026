@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.lib.team6328.util.LoggedTracer;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.ShootCommand;
 import frc.robot.game.GameState;
 import frc.robot.game.GameStateIO;
 import frc.robot.game.GameStateIORobot;
@@ -252,16 +253,40 @@ public class RobotContainer {
     driverController.povUp().onTrue(elevator.goToPosition(ElevatorConstants.TOP_POSITION));
     driverController.povRight().onTrue(elevator.goToPosition(ElevatorConstants.CLIMB_POSITION));
 
+    // coDriverController
+    //     .button(10)
+    //     .onTrue(superstructure.shootAtHub())
+    //     .onFalse(superstructure.stop());
+    driverController
+        .leftBumper()
+        .whileTrue(
+            new ShootCommand(
+                superstructure,
+                RotationsPerSecond.of(SuperstructureConstants.Shooter.TRENCH_SHOOT_SPEED)));
+    driverController
+        .rightBumper()
+        .whileTrue(
+            new ShootCommand(
+                superstructure,
+                RotationsPerSecond.of(SuperstructureConstants.Shooter.DEFAULT_SHOOT_SPEED)));
     coDriverController
         .button(10)
-        .onTrue(superstructure.shootAtHub())
-        .onFalse(superstructure.stop());
+        .whileTrue(
+            new ShootCommand(
+                superstructure,
+                RotationsPerSecond.of(SuperstructureConstants.Shooter.TRENCH_SHOOT_SPEED)));
     coDriverController
         .button(1)
-        .onTrue(
-            superstructure.shootAtSpeed(
-                RotationsPerSecond.of(SuperstructureConstants.Shooter.DEFAULT_SHOOT_SPEED)))
-        .onFalse(superstructure.stop());
+        .whileTrue(
+            new ShootCommand(
+                superstructure,
+                RotationsPerSecond.of(SuperstructureConstants.Shooter.DEFAULT_SHOOT_SPEED)));
+    // coDriverController
+    //     .button(1)
+    //     .onTrue(
+    //         superstructure.shootAtSpeed(
+    //             RotationsPerSecond.of(SuperstructureConstants.Shooter.DEFAULT_SHOOT_SPEED)))
+    //     .onFalse(superstructure.stop());
     // coDriverController.button(11).onTrue(new StopShooter(loader, launcher));
 
     // coDriverController.button(7).onTrue(launcher.startAtVoltage(Volts.of(6))).onFalse(launcher.stopLauncher());

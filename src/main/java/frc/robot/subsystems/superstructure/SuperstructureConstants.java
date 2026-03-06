@@ -59,6 +59,7 @@ public class SuperstructureConstants {
 
     public static final boolean LEADER_INVERTED = false;
     public static final double DEFAULT_SHOOT_SPEED = 50;
+    public static final double TRENCH_SHOOT_SPEED = 70;
 
     public static class Motor {
       public static final double KP = 0.11;

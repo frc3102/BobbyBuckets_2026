@@ -17,6 +17,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "IntakeStart"
+          }
+        },
+        {
           "type": "race",
           "data": {
             "commands": [
@@ -48,7 +54,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 5.0
+                  "waitTime": 10.0
                 }
               }
             ]
@@ -58,6 +64,12 @@
           "type": "named",
           "data": {
             "name": "StopShooter"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeStop"
           }
         }
       ]

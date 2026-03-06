@@ -268,7 +268,15 @@ public class SuperstructureIOTalonFX implements SuperstructureIO {
     kicker.setControl(neutralOut);
   }
 
+  @Override
+  public boolean isAtSpeed(AngularVelocity velocity) {
+    var currentVelocity = shooterLeaderVelocity.getValue();
+    return currentVelocity.isNear(velocity, RotationsPerSecond.of(1))
+        || currentVelocity.gte(velocity);
+  }
+
   public void stopShooter() {
+    shooterTargetVelocity = RotationsPerSecond.of(0);
     shooterLeader.setControl(neutralOut);
   }
 

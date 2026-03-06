@@ -64,6 +64,25 @@ public class Superstructure extends SubsystemBase {
     return shootingMap;
   }
 
+  public void startConveyorAndKicker() {
+    io.setKickerRPS(RotationsPerSecond.of(defaultKickerSpeed.get()));
+    io.setConveyorRPS(SuperstructureConstants.Conveyor.DEFAULT_VELOCITY);
+  }
+
+  public void startShooter(AngularVelocity velocity) {
+    io.setShooterRPS(velocity);
+  }
+
+  public void stopAll() {
+    io.setConveyorRPS(RotationsPerSecond.of(0));
+    io.stopKicker();
+    io.stopShooter();
+  }
+
+  public boolean isAtSpeed(AngularVelocity velocity) {
+    return io.isAtSpeed(velocity);
+  }
+
   public Command tuneSpeed() {
     return runOnce(
         () -> {

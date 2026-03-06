@@ -45,6 +45,10 @@ public interface SuperstructureIO {
 
   public default void setShooterRPS(AngularVelocity velocity) {}
 
+  public default boolean isAtSpeed(AngularVelocity velocity) {
+    return true;
+  }
+
   public default void stopKicker() {}
 
   public default void stopShooter() {}
