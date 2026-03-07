@@ -10,7 +10,8 @@ public class IntakeTiltConstants {
   public static final int GEAR_RATIO = 180;
   public static final Angle EXTENDED_POSITION = Degrees.of(120);
   public static final double IN_POSITION = 7;
-  public static final double OUT_POSITION = -24;
+  // original: -24, tight: -33, -30 middle
+  public static final double OUT_POSITION = -33;
 
   public static class Motor {
     public static final double KP = 4.;

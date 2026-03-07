@@ -58,6 +58,7 @@ public class SuperstructureConstants {
     public static final int CAN_ID_FOLLOWER = 14;
 
     public static final boolean LEADER_INVERTED = false;
+    public static final double TOWER_SHOOT_SPEED = 47;
     public static final double DEFAULT_SHOOT_SPEED = 50;
     public static final double TRENCH_SHOOT_SPEED = 60;
 

@@ -283,6 +283,12 @@ public class RobotContainer {
             new ShootCommand(
                 superstructure,
                 RotationsPerSecond.of(SuperstructureConstants.Shooter.DEFAULT_SHOOT_SPEED)));
+    coDriverController
+        .button(2)
+        .whileTrue(
+            new ShootCommand(
+                superstructure,
+                RotationsPerSecond.of(SuperstructureConstants.Shooter.TOWER_SHOOT_SPEED)));
     // coDriverController
     //     .button(1)
     //     .onTrue(
