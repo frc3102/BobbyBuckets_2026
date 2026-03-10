@@ -42,7 +42,7 @@ public class Superstructure extends SubsystemBase {
   }
 
   private static double inverseInterp(Distance start, Distance end, Distance q) {
-    return MathUtil.interpolate(start.in(Meters), end.in(Meters), q.in(Meters));
+    return MathUtil.inverseInterpolate(start.in(Meters), end.in(Meters), q.in(Meters));
   }
 
   private static AngularVelocity interp(AngularVelocity s, AngularVelocity e, double q) {
@@ -52,13 +52,15 @@ public class Superstructure extends SubsystemBase {
 
   private static InterpolatingTreeMap<Distance, AngularVelocity> shootingMap;
 
-  private static InterpolatingTreeMap<Distance, AngularVelocity> getShootingMap() {
+  protected static InterpolatingTreeMap<Distance, AngularVelocity> getShootingMap() {
     if (shootingMap == null) {
       var map =
           new InterpolatingTreeMap<Distance, AngularVelocity>(
               Superstructure::inverseInterp, Superstructure::interp);
-      map.put(Feet.of(6), RotationsPerSecond.of(30));
-      map.put(Feet.of(10), RotationsPerSecond.of(45));
+      map.put(Feet.of(5), RotationsPerSecond.of(30));
+      map.put(Feet.of(8), RotationsPerSecond.of(45));
+      map.put(Feet.of(10), RotationsPerSecond.of(55));
+      map.put(Feet.of(15), RotationsPerSecond.of(60));
       shootingMap = map;
     }
     return shootingMap;
