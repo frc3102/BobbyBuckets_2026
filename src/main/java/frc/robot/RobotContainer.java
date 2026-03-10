@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.lib.team6328.util.LoggedTracer;
+import frc.robot.commands.AutoDistanceShoot;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.ShootCommand;
 import frc.robot.game.GameState;
@@ -277,6 +278,7 @@ public class RobotContainer {
     //         new ShootCommand(
     //             superstructure,
     //             RotationsPerSecond.of(SuperstructureConstants.Shooter.DEFAULT_SHOOT_SPEED)));
+    coDriverController.button(12).whileTrue(new AutoDistanceShoot(superstructure));
     coDriverController
         .button(10)
         .whileTrue(

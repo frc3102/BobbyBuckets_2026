@@ -2,10 +2,7 @@ package frc.robot.subsystems.superstructure;
 
 import static edu.wpi.first.units.Units.*;
 
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.interpolation.InterpolatingTreeMap;
 import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.team6328.util.LoggedTracer;
@@ -35,35 +32,6 @@ public class Superstructure extends SubsystemBase {
     io.updateInputs(inputs);
     Logger.processInputs("Superstructure", inputs);
     LoggedTracer.record("Superstructure");
-  }
-
-  private AngularVelocity rpsForDistance(Distance distance) {
-    return getShootingMap().get(distance);
-  }
-
-  private static double inverseInterp(Distance start, Distance end, Distance q) {
-    return MathUtil.inverseInterpolate(start.in(Meters), end.in(Meters), q.in(Meters));
-  }
-
-  private static AngularVelocity interp(AngularVelocity s, AngularVelocity e, double q) {
-    return RotationsPerSecond.of(
-        MathUtil.interpolate(s.in(RotationsPerSecond), e.in(RotationsPerSecond), q));
-  }
-
-  private static InterpolatingTreeMap<Distance, AngularVelocity> shootingMap;
-
-  protected static InterpolatingTreeMap<Distance, AngularVelocity> getShootingMap() {
-    if (shootingMap == null) {
-      var map =
-          new InterpolatingTreeMap<Distance, AngularVelocity>(
-              Superstructure::inverseInterp, Superstructure::interp);
-      map.put(Feet.of(5), RotationsPerSecond.of(30));
-      map.put(Feet.of(8), RotationsPerSecond.of(45));
-      map.put(Feet.of(10), RotationsPerSecond.of(55));
-      map.put(Feet.of(15), RotationsPerSecond.of(60));
-      shootingMap = map;
-    }
-    return shootingMap;
   }
 
   public void startConveyorAndKicker() {
@@ -109,7 +77,7 @@ public class Superstructure extends SubsystemBase {
           var calc = ShootingCalculator.getInstance();
           var target = calc.getHub();
           var delta = calc.update(target);
-          io.setShooterRPS(rpsForDistance(delta.distance()));
+          io.setShooterRPS(ShootingCalculator.rpsForDistance(delta.distance()));
           io.setKickerRPS(SuperstructureConstants.Kicker.DEFAULT_VELOCITY);
           io.setConveyorRPS(SuperstructureConstants.Conveyor.DEFAULT_VELOCITY);
         });

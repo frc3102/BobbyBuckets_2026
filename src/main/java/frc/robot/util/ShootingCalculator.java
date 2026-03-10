@@ -2,10 +2,13 @@ package frc.robot.util;
 
 import static edu.wpi.first.units.Units.*;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.interpolation.InterpolatingTreeMap;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
@@ -56,6 +59,35 @@ public class ShootingCalculator {
       throw new RuntimeException("ShootingCalculator never initialized");
     }
     return instance;
+  }
+
+  public static AngularVelocity rpsForDistance(Distance distance) {
+    return getShootingMap().get(distance);
+  }
+
+  private static double inverseInterp(Distance start, Distance end, Distance q) {
+    return MathUtil.inverseInterpolate(start.in(Meters), end.in(Meters), q.in(Meters));
+  }
+
+  private static AngularVelocity interp(AngularVelocity s, AngularVelocity e, double q) {
+    return RotationsPerSecond.of(
+        MathUtil.interpolate(s.in(RotationsPerSecond), e.in(RotationsPerSecond), q));
+  }
+
+  private static InterpolatingTreeMap<Distance, AngularVelocity> shootingMap;
+
+  public static InterpolatingTreeMap<Distance, AngularVelocity> getShootingMap() {
+    if (shootingMap == null) {
+      var map =
+          new InterpolatingTreeMap<Distance, AngularVelocity>(
+              ShootingCalculator::inverseInterp, ShootingCalculator::interp);
+      map.put(Feet.of(4.25), RotationsPerSecond.of(36.5));
+      map.put(Feet.of(7.5), RotationsPerSecond.of(46.5));
+      map.put(Feet.of(12.125), RotationsPerSecond.of(49.75));
+      map.put(Feet.of(17.8), RotationsPerSecond.of(55));
+      shootingMap = map;
+    }
+    return shootingMap;
   }
 
   public static record TargetDelta(Angle angle, Distance distance) {}
