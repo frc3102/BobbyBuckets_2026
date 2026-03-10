@@ -81,7 +81,7 @@ public class ShootingCalculator {
       var map =
           new InterpolatingTreeMap<Distance, AngularVelocity>(
               ShootingCalculator::inverseInterp, ShootingCalculator::interp);
-      map.put(Feet.of(4.25), RotationsPerSecond.of(36.5));
+      map.put(Feet.of(4.25), RotationsPerSecond.of(36));
       map.put(Feet.of(7.5), RotationsPerSecond.of(46.5));
       map.put(Feet.of(12.125), RotationsPerSecond.of(49.75));
       map.put(Feet.of(17.8), RotationsPerSecond.of(55));
