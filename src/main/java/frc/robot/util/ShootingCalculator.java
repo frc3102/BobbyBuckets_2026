@@ -8,6 +8,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.field.FieldConstants;
 import frc.robot.game.GameState;
 import org.littletonrobotics.junction.Logger;
@@ -30,11 +31,17 @@ public class ShootingCalculator {
 
   private double angleToTarget;
 
+  private Timer elapsed;
+
+  private TargetDelta prev;
+
   private ShootingCalculator(
       PoseSupplier poseSupplier, ChassisSpeedsSupplier chassisSpeedsSupplier, GameState gameState) {
     this.poseSupplier = poseSupplier;
     this.gameState = gameState;
     this.chassisSpeedsSupplier = chassisSpeedsSupplier;
+    this.elapsed = new Timer();
+    this.elapsed.start();
   }
 
   private static ShootingCalculator instance;
@@ -54,6 +61,11 @@ public class ShootingCalculator {
   public static record TargetDelta(Angle angle, Distance distance) {}
 
   public TargetDelta update(Translation2d target) {
+    // Only update every 40ms to reduce CPU impact
+    if (!this.elapsed.hasElapsed(0.04)) {
+      return prev;
+    }
+
     var pose = poseSupplier.supply();
     double headingRad = pose.getRotation().getRadians();
     double cosH = Math.cos(headingRad);
@@ -108,7 +120,9 @@ public class ShootingCalculator {
     }
     Logger.recordOutput("ShootingCalculator/LeadAngle", -leadAngle);
     Logger.recordOutput("ShootingCalculator/FinalAngle", fieldAngle);
-    return new TargetDelta(Degrees.of(fieldAngle), Meters.of(distance));
+    prev = new TargetDelta(Degrees.of(fieldAngle), Meters.of(distance));
+    this.elapsed.reset();
+    return prev;
   }
 
   public Translation2d getHub() {
