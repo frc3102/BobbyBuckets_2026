@@ -8,6 +8,7 @@
 package frc.robot;
 
 import static edu.wpi.first.units.Units.RotationsPerSecond;
+import static edu.wpi.first.units.Units.Volts;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -236,6 +237,9 @@ public class RobotContainer {
     driverController.b().onTrue(intakeFeed.stopIntake());
     driverController.x().onTrue(intakeTilt.extendHopper());
     driverController.y().onTrue(intakeTilt.retractHopper());
+    driverController.rightBumper().onTrue(intakeFeed.startIntakeVoltage(Volts.of(5.5)));
+    driverController.leftBumper().onTrue(intakeFeed.startIntakeVoltage(Volts.of(6.5)));
+
     driverController
         .rightTrigger()
         .whileTrue(

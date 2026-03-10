@@ -6,7 +6,7 @@ import edu.wpi.first.units.measure.Voltage;
 
 public class IntakeFeedConstants {
   // original 5, 5.25 high
-  public static final Voltage VOLTAGE = Volts.of(5);
+  public static final Voltage VOLTAGE = Volts.of(6);
   public static final int CAN_ID = 4;
   public static final double GEAR_RATIO = 3;
 

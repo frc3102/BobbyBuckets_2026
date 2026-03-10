@@ -4,6 +4,7 @@ import static edu.wpi.first.units.Units.Second;
 import static edu.wpi.first.units.Units.Volts;
 
 import com.ctre.phoenix6.SignalLogger;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -36,6 +37,13 @@ public class IntakeFeed extends SubsystemBase {
     io.updateInputs(inputs);
     Logger.processInputs("IntakeFeed", inputs);
     LoggedTracer.record("Intake");
+  }
+
+  public Command startIntakeVoltage(Voltage volts) {
+    return runOnce(
+        () -> {
+          io.setVoltage(volts);
+        });
   }
 
   public Command startIntake() {
