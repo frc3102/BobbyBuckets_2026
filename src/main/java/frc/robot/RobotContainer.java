@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.lib.team6328.util.LoggedTracer;
 import frc.robot.commands.AutoDistanceShoot;
 import frc.robot.commands.AutoJiggleHopper;
+import frc.robot.commands.AutoTiltAndWait;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.JiggleHopper;
 import frc.robot.commands.ShootCommand;
@@ -188,14 +189,14 @@ public class RobotContainer {
     LoggedTracer.record("DisabledRobotContainer");
   }
 
-  private Rotation2d getAngleToHub() {
+  private static Rotation2d getAngleToHub() {
     var calc = ShootingCalculator.getInstance();
     var target = calc.getHub();
     var delta = calc.update(target);
     return new Rotation2d(delta.angle());
   }
 
-  private Rotation2d getAngleToTrench() {
+  private static Rotation2d getAngleToTrench() {
     var calc = ShootingCalculator.getInstance();
     var target = calc.getNearestTrench();
     var delta = calc.update(target);
@@ -214,15 +215,24 @@ public class RobotContainer {
         "ShootAtHub50", new ShootCommand(superstructure, RotationsPerSecond.of(50)));
     // NamedCommands.registerCommand("ShootAtHub", superstructure.shootAtHub());
     NamedCommands.registerCommand("StopShooter", superstructure.stop());
-    NamedCommands.registerCommand(
-        "AimAtHub",
-        DriveCommands.joystickDriveAtAngle(drive, () -> 0, () -> 0, () -> getAngleToHub()));
+
+    var aimCommand =
+        DriveCommands.joystickDriveAtAngle(drive, () -> 0, () -> 0, RobotContainer::getAngleToHub)
+            .until(
+                () -> {
+                  var angle = RobotContainer.getAngleToHub();
+                  return drive.getRotation().getMeasure().isNear(angle.getMeasure(), 0.05);
+                });
+
+    NamedCommands.registerCommand("AimAtHub", aimCommand);
     NamedCommands.registerCommand(
         "ElevatorUp", elevator.goToPosition(ElevatorConstants.TOP_POSITION));
     NamedCommands.registerCommand(
         "ElevatorClimb", elevator.goToPosition(ElevatorConstants.CLIMB_POSITION));
     NamedCommands.registerCommand(
         "ElevatorDown", elevator.goToPosition(ElevatorConstants.BOTTOM_POSITION));
+    NamedCommands.registerCommand(
+        "TiltOutAndWait", new AutoTiltAndWait(intakeTilt, IntakeTiltConstants.OUT_POSITION));
     NamedCommands.registerCommand("TiltOut", intakeTilt.extendHopper());
     NamedCommands.registerCommand("TiltIn", intakeTilt.retractHopper());
     NamedCommands.registerCommand("IntakeStart", intakeFeed.startIntake());
@@ -262,7 +272,7 @@ public class RobotContainer {
                 drive,
                 () -> -driverController.getLeftY(),
                 () -> -driverController.getLeftX(),
-                this::getAngleToHub));
+                RobotContainer::getAngleToHub));
     driverController
         .leftTrigger()
         .whileTrue(
@@ -270,7 +280,7 @@ public class RobotContainer {
                 drive,
                 () -> -driverController.getLeftY(),
                 () -> -driverController.getLeftX(),
-                this::getAngleToTrench));
+                RobotContainer::getAngleToTrench));
     driverController.back().onTrue(drive.zeroGyroscope());
     driverController.povDown().onTrue(elevator.goToPosition(ElevatorConstants.BOTTOM_POSITION));
     driverController.povUp().onTrue(elevator.goToPosition(ElevatorConstants.TOP_POSITION));
