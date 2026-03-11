@@ -21,7 +21,9 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.lib.team6328.util.LoggedTracer;
 import frc.robot.commands.AutoDistanceShoot;
+import frc.robot.commands.AutoJiggleHopper;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.JiggleHopper;
 import frc.robot.commands.ShootCommand;
 import frc.robot.game.GameState;
 import frc.robot.game.GameStateIO;
@@ -44,6 +46,7 @@ import frc.robot.subsystems.intake.feed.IntakeFeed;
 import frc.robot.subsystems.intake.feed.IntakeFeedIO;
 import frc.robot.subsystems.intake.feed.IntakeFeedIOTalonFX;
 import frc.robot.subsystems.intake.tilt.IntakeTilt;
+import frc.robot.subsystems.intake.tilt.IntakeTiltConstants;
 import frc.robot.subsystems.intake.tilt.IntakeTiltIO;
 import frc.robot.subsystems.intake.tilt.IntakeTiltIOTalonFX;
 import frc.robot.subsystems.superstructure.Superstructure;
@@ -200,6 +203,11 @@ public class RobotContainer {
   }
 
   public void registerNamedCommands() {
+    NamedCommands.registerCommand("AutoShoot", new AutoDistanceShoot(superstructure));
+    NamedCommands.registerCommand(
+        "JiggleHopper",
+        new AutoJiggleHopper(
+            intakeTilt, IntakeTiltConstants.OUT_POSITION, IntakeTiltConstants.FEED_POSITION, 0.75));
     NamedCommands.registerCommand(
         "ShootAtHub", new ShootCommand(superstructure, RotationsPerSecond.of(45)));
     NamedCommands.registerCommand(
@@ -211,6 +219,8 @@ public class RobotContainer {
         DriveCommands.joystickDriveAtAngle(drive, () -> 0, () -> 0, () -> getAngleToHub()));
     NamedCommands.registerCommand(
         "ElevatorUp", elevator.goToPosition(ElevatorConstants.TOP_POSITION));
+    NamedCommands.registerCommand(
+        "ElevatorClimb", elevator.goToPosition(ElevatorConstants.CLIMB_POSITION));
     NamedCommands.registerCommand(
         "ElevatorDown", elevator.goToPosition(ElevatorConstants.BOTTOM_POSITION));
     NamedCommands.registerCommand("TiltOut", intakeTilt.extendHopper());
@@ -239,7 +249,11 @@ public class RobotContainer {
     driverController.x().onTrue(intakeTilt.extendHopper());
     driverController.y().onTrue(intakeTilt.retractHopper());
     driverController.rightBumper().onTrue(intakeFeed.startIntakeVoltage(Volts.of(5.5)));
-    driverController.leftBumper().onTrue(intakeFeed.startIntakeVoltage(Volts.of(6.5)));
+    driverController
+        .leftBumper()
+        .whileTrue(
+            new JiggleHopper(
+                intakeTilt, IntakeTiltConstants.OUT_POSITION, IntakeTiltConstants.FEED_POSITION));
 
     driverController
         .rightTrigger()

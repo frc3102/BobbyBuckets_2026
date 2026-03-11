@@ -62,7 +62,9 @@ public class ShootingCalculator {
   }
 
   public static AngularVelocity rpsForDistance(Distance distance) {
-    return getShootingMap().get(distance);
+    var rps = getShootingMap().get(distance);
+    Logger.recordOutput("ShootingCalculator/TargetRPS", rps.in(RotationsPerSecond));
+    return rps;
   }
 
   private static double inverseInterp(Distance start, Distance end, Distance q) {

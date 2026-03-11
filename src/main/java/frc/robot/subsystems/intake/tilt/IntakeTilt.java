@@ -37,6 +37,10 @@ public class IntakeTilt extends SubsystemBase {
     LoggedTracer.record("Tilt");
   }
 
+  public void setPosition(double pos) {
+    io.setAngle(Rotations.of(pos));
+  }
+
   public Command extendHopper() {
     return runOnce(
         () -> {
