@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.field.FieldConstants;
 import frc.robot.game.GameState;
+import frc.robot.subsystems.superstructure.SuperstructureConstants;
 import org.littletonrobotics.junction.Logger;
 
 public class ShootingCalculator {
@@ -104,8 +105,8 @@ public class ShootingCalculator {
     double headingRad = pose.getRotation().getRadians();
     double cosH = Math.cos(headingRad);
     double sinH = Math.sin(headingRad);
-    double shooterXOffset = 0; // SuperstructureConstants.SHOOTER_OFFSET_X.in(Meters);
-    double shooterYOffset = 0; // SuperstructureConstants.SHOOTER_OFFSET_Y.in(Meters);
+    double shooterXOffset = SuperstructureConstants.SHOOTER_OFFSET_X.in(Meters);
+    double shooterYOffset = SuperstructureConstants.SHOOTER_OFFSET_Y.in(Meters);
     double turretX = pose.getX() + shooterXOffset * cosH - shooterYOffset * sinH;
     double turretY = pose.getY() + shooterXOffset * sinH + shooterYOffset * cosH;
 
@@ -120,6 +121,7 @@ public class ShootingCalculator {
     // angleToTarget = normalizeAngle(fieldAngle - robotHeading);
     Logger.recordOutput("ShootingCalculator/Target", target);
     Logger.recordOutput("ShootingCalculator/Distance", Meters.of(distance).in(Feet));
+    Logger.recordOutput("ShootingCalculator/DistanceMeters", distance);
     // fieldAngle is straight to the target, calculate lead offset next
     var chassisSpeeds = chassisSpeedsSupplier.supply();
     double fieldVX =
