@@ -32,6 +32,14 @@ public class Haptics extends SubsystemBase {
     LoggedTracer.record("Haptics");
   }
 
+  public Command headBackWarningCommand() {
+    return new RumblePatternCommand(this, 2, 0.25, 0.5, RumbleType.kBothRumble, 1);
+  }
+
+  public Command startShootingCommand() {
+    return new RumblePatternCommand(this, 3, 0.5, 0.5, RumbleType.kBothRumble, 1);
+  }
+
   public static class RumblePatternCommand extends SequentialCommandGroup {
     public RumblePatternCommand(
         Haptics haptics,

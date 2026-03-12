@@ -41,6 +41,10 @@ public class IntakeTilt extends SubsystemBase {
     io.setAngle(Rotations.of(pos));
   }
 
+  public boolean inPosition(double pos) {
+    return inputs.position.isNear(Rotations.of(pos), 0.05);
+  }
+
   public Command extendHopper() {
     return runOnce(
         () -> {

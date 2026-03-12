@@ -2,9 +2,7 @@ package frc.robot.game;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.game.GameState.GamePhase;
-import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class GameStateIORobot implements GameStateIO {
   private Alliance alliance = Alliance.Blue;
@@ -12,25 +10,22 @@ public class GameStateIORobot implements GameStateIO {
   private boolean receivedGameMessage = false;
   private GamePhase currentPhase = GamePhase.PRE_MATCH;
 
-  private LoggedDashboardChooser<Alliance> allianceChooser;
-
-  public GameStateIORobot() {
-    createChooser();
-  }
+  public GameStateIORobot() {}
 
   @Override
   public void updateInputs(GameStateInputs inputs) {
     updateFirstActiveAlliance();
-    updateAlliance();
     updateGamePhase();
     inputs.alliance = alliance;
     inputs.firstActiveAlliance = firstActiveAlliance;
     inputs.phase = currentPhase;
+    inputs.shouldHeadBack = isHeadBackWarning();
+    inputs.shouldStartShooting = isGreenLightPreShift();
+    inputs.matchType = DriverStation.getMatchType();
   }
 
   public void updateFirstActiveAlliance() {
     if (receivedGameMessage) return;
-
     String gameData = DriverStation.getGameSpecificMessage();
     if (gameData != null && gameData.length() > 0) {
       char c = gameData.charAt(0);
@@ -66,18 +61,88 @@ public class GameStateIORobot implements GameStateIO {
     }
   }
 
-  /**
-   * Update Alliance from the FMS. They are not guaranteed to send this data, but if they send it,
-   * it can be relied upon. Use manual choice if we haven't gotten FMS data.
-   */
-  public void updateAlliance() {
-    alliance = DriverStation.getAlliance().orElseGet(() -> allianceChooser.get());
+  public boolean isOurAllianceActive() {
+    Alliance active = getCurrentlyActiveAlliance();
+    return active == null || alliance == active;
   }
 
-  private void createChooser() {
-    var chooser = new SendableChooser<Alliance>();
-    chooser.addOption("Blue", Alliance.Blue);
-    chooser.addOption("Red", Alliance.Red);
-    allianceChooser = new LoggedDashboardChooser<>("GameState/ManualAlliance", chooser);
+  public Alliance getCurrentlyActiveAlliance() {
+    if (!receivedGameMessage || firstActiveAlliance == null) return null;
+
+    Alliance other = (firstActiveAlliance == Alliance.Blue) ? Alliance.Red : Alliance.Blue;
+
+    switch (currentPhase) {
+      case SHIFT_1:
+      case SHIFT_3:
+        return firstActiveAlliance;
+      case SHIFT_2:
+      case SHIFT_4:
+        return other;
+      default:
+        return null; // Both active (auto, transition, endgame)
+    }
+  }
+
+  /** Seconds until our next active shift starts. 0 if already active. */
+  public double getSecondsUntilOurNextShift() {
+    if (!receivedGameMessage || firstActiveAlliance == null || isOurAllianceActive()) return 0;
+
+    double t = DriverStation.getMatchTime();
+    boolean weAreFirst = (alliance == firstActiveAlliance);
+
+    switch (currentPhase) {
+      case TRANSITION:
+        return weAreFirst ? Math.max(0, t - 130) : Math.max(0, t - 105);
+      case SHIFT_1:
+        return weAreFirst ? 0 : Math.max(0, t - 105);
+      case SHIFT_2:
+        return weAreFirst ? Math.max(0, t - 80) : 0;
+      case SHIFT_3:
+        return weAreFirst ? 0 : Math.max(0, t - 55);
+      case SHIFT_4:
+        return weAreFirst ? Math.max(0, t - 30) : 0;
+      default:
+        return 0;
+    }
+  }
+
+  /** True when 5-3 seconds before our shift. Drivers should head to scoring position. */
+  @Override
+  public boolean isHeadBackWarning() {
+    if (isOurAllianceActive()) return false;
+    double s = getSecondsUntilOurNextShift();
+    return s > 3.0 && s <= 5.0;
+  }
+
+  /** True when 3-0 seconds before our shift. Pre-aim and pre-spool! */
+  @Override
+  public boolean isGreenLightPreShift() {
+    if (isOurAllianceActive()) return false;
+    double s = getSecondsUntilOurNextShift();
+    return s > 0.0 && s <= 3.0;
+  }
+
+  public Alliance getFirstActiveAlliance() {
+    return firstActiveAlliance;
+  }
+
+  public double getTimeRemainingActive() {
+    if (!isOurAllianceActive()) return 0;
+    double t = DriverStation.getMatchTime();
+    boolean weAreFirst = (alliance == firstActiveAlliance);
+    switch (currentPhase) {
+      case SHIFT_1:
+        return weAreFirst ? Math.max(0, t - 105) : Math.max(0, t - 80);
+      case SHIFT_2:
+        return weAreFirst ? Math.max(0, t - 80) : Math.max(0, t - 55);
+      case SHIFT_3:
+        return weAreFirst ? Math.max(0, t - 55) : Math.max(0, t - 30);
+      case SHIFT_4:
+        return weAreFirst ? Math.max(0, t - 30) : Math.max(0, t);
+      case END_GAME:
+        return Math.max(0, t);
+      default:
+        return 0;
+    }
   }
 }

@@ -24,6 +24,4 @@ public class JiggleHopper extends Command {
   public void initialize() {
     tilt.setPosition(inPosition);
   }
-
-  
 }

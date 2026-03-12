@@ -16,6 +16,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -79,6 +80,9 @@ public class RobotContainer {
   private final Elevator elevator;
 
   private final GameState gameState;
+
+  private boolean headBackWarning = false;
+  private boolean startShootingWarning = false;
 
   // Controller
   private final CommandXboxController driverController = new CommandXboxController(0);
@@ -181,6 +185,26 @@ public class RobotContainer {
 
   public void periodic() {
     gameState.periodic();
+    if (gameState.isRealMatch()) {
+      // if we're in the head-back time and we haven't issued the warning, start the buzz
+      if (gameState.isHeadBackWarning()) {
+        if (!headBackWarning) {
+          CommandScheduler.getInstance().schedule(haptics.headBackWarningCommand());
+        }
+        headBackWarning = true;
+      } else {
+        headBackWarning = false;
+      }
+      // if we're in the start-shooting time and we haven't issued the warning, start the buzz
+      if (gameState.isGreenLightPreShift()) {
+        if (!startShootingWarning) {
+          CommandScheduler.getInstance().schedule(haptics.startShootingCommand());
+          startShootingWarning = true;
+        }
+      } else {
+        startShootingWarning = false;
+      }
+    }
     LoggedTracer.record("RobotContainer");
   }
 
