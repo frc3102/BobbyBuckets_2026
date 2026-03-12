@@ -8,36 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.280684033590099,
-        "y": 5.518764488828526
+        "x": 2.4333863161321276,
+        "y": 7.755156035841557
       },
       "isLocked": false,
       "linkedName": "Depot Shoot End"
     },
     {
       "anchor": {
-        "x": 1.0565622430098687,
-        "y": 4.979675121641995
+        "x": 6.006656772546602,
+        "y": 7.3887773266173244
       },
       "prevControl": {
-        "x": 1.0475906669855368,
-        "y": 5.547198945699783
-      },
-      "nextControl": {
-        "x": 1.0605138195111001,
-        "y": 4.729706353506542
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 1.0565622430098687,
-        "y": 4.578371753358004
-      },
-      "prevControl": {
-        "x": 1.0473255584887546,
-        "y": 5.349935260852765
+        "x": 5.006656772546602,
+        "y": 7.3887773266173244
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,7 +30,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.0,
+      "waypointRelativePos": 0.416164491234756,
       "rotationDegrees": 0.0
     }
   ],
@@ -54,7 +38,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "ElevatorUp",
+      "name": "IntakeStart",
       "waypointRelativePos": 0,
       "endWaypointRelativePos": null,
       "command": null

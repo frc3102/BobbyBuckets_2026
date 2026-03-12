@@ -8,58 +8,71 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.280684033590099,
-        "y": 5.518764488828526
+        "x": 2.730904858057407,
+        "y": 5.508733215884513
       },
       "isLocked": false,
       "linkedName": "Depot Shoot End"
     },
     {
       "anchor": {
-        "x": 1.0565622430098687,
-        "y": 4.979675121641995
+        "x": 0.6082135331003293,
+        "y": 4.769000565378289
       },
       "prevControl": {
-        "x": 1.0475906669855368,
-        "y": 5.547198945699783
+        "x": 1.3508686571478652,
+        "y": 4.850435185869322
       },
       "nextControl": {
-        "x": 1.0605138195111001,
-        "y": 4.729706353506542
+        "x": 0.3597030958437456,
+        "y": 4.741750564010554
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.0565622430098687,
-        "y": 4.578371753358004
+        "x": 0.7274002449972592,
+        "y": 6.9376703844572365
       },
       "prevControl": {
-        "x": 1.0473255584887546,
-        "y": 5.349935260852765
+        "x": 0.255169182505629,
+        "y": 6.892926966922844
+      },
+      "nextControl": {
+        "x": 1.4179786141387427,
+        "y": 7.0031019893747235
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.0479719195449566,
+        "y": 6.133315472519189
+      },
+      "prevControl": {
+        "x": 1.4961300820504113,
+        "y": 6.650152474139713
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Depot Shoot End"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.0,
-      "rotationDegrees": 0.0
+      "waypointRelativePos": 0.9035049066310974,
+      "rotationDegrees": 90.0
+    },
+    {
+      "waypointRelativePos": 1.5909453601371943,
+      "rotationDegrees": 90.0
     }
   ],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "ElevatorUp",
-      "waypointRelativePos": 0,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -70,7 +83,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -39.029398502441566
   },
   "reversed": false,
   "folder": null,

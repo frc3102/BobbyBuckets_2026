@@ -27,6 +27,7 @@ import frc.robot.commands.AutoTiltAndWait;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.JiggleHopper;
 import frc.robot.commands.ShootCommand;
+import frc.robot.commands.TuningShot;
 import frc.robot.game.GameState;
 import frc.robot.game.GameStateIO;
 import frc.robot.game.GameStateIORobot;
@@ -310,22 +311,6 @@ public class RobotContainer {
     driverController.povUp().onTrue(elevator.goToPosition(ElevatorConstants.TOP_POSITION));
     driverController.povRight().onTrue(elevator.goToPosition(ElevatorConstants.CLIMB_POSITION));
 
-    // coDriverController
-    //     .button(10)
-    //     .onTrue(superstructure.shootAtHub())
-    //     .onFalse(superstructure.stop());
-    // driverController
-    //     .leftBumper()
-    //     .whileTrue(
-    //         new ShootCommand(
-    //             superstructure,
-    //             RotationsPerSecond.of(SuperstructureConstants.Shooter.TRENCH_SHOOT_SPEED)));
-    // driverController
-    //     .rightBumper()
-    //     .whileTrue(
-    //         new ShootCommand(
-    //             superstructure,
-    //             RotationsPerSecond.of(SuperstructureConstants.Shooter.DEFAULT_SHOOT_SPEED)));
     coDriverController.button(12).whileTrue(new AutoDistanceShoot(superstructure));
     coDriverController
         .button(10)
@@ -333,31 +318,10 @@ public class RobotContainer {
             new ShootCommand(
                 superstructure,
                 RotationsPerSecond.of(SuperstructureConstants.Shooter.TRENCH_SHOOT_SPEED)));
-    coDriverController
-        .button(1)
-        .whileTrue(
-            new ShootCommand(
-                superstructure,
-                RotationsPerSecond.of(SuperstructureConstants.Shooter.DEFAULT_SHOOT_SPEED)));
-    coDriverController
-        .button(2)
-        .whileTrue(
-            new ShootCommand(
-                superstructure,
-                RotationsPerSecond.of(SuperstructureConstants.Shooter.TOWER_SHOOT_SPEED)));
-    // coDriverController
-    //     .button(1)
-    //     .onTrue(
-    //         superstructure.shootAtSpeed(
-    //             RotationsPerSecond.of(SuperstructureConstants.Shooter.DEFAULT_SHOOT_SPEED)))
-    //     .onFalse(superstructure.stop());
-    // coDriverController.button(11).onTrue(new StopShooter(loader, launcher));
 
-    // coDriverController.button(7).onTrue(launcher.startAtVoltage(Volts.of(6))).onFalse(launcher.stopLauncher());
-    // coDriverController.button(8).onTrue(launcher.stopLauncher());
-    // coDriverController.button(4).onTrue(loader.startLoader());
-    // coDriverController.button(5).onTrue(loader.stopLoader());
-
+    coDriverController.button(-1).whileTrue(new TuningShot(superstructure));
+    coDriverController.button(-1).onTrue(haptics.headBackWarningCommand());
+    coDriverController.button(-1).onTrue(haptics.startShootingCommand());
   }
 
   /**
