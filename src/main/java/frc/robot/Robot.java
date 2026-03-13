@@ -96,10 +96,6 @@ public class Robot extends LoggedRobot {
     robotContainer = new RobotContainer();
 
     CommandScheduler.getInstance().schedule(PathfindingCommand.warmupCommand());
-
-    if (!Constants.TUNING_MODE) {
-      Threads.setCurrentThreadPriority(true, 10);
-    }
   }
 
   /** This function is called periodically during all modes. */

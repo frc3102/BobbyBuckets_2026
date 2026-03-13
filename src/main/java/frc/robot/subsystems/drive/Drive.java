@@ -62,9 +62,9 @@ public class Drive extends SubsystemBase {
               Math.hypot(TunerConstants.BackRight.LocationX, TunerConstants.BackRight.LocationY)));
 
   // PathPlanner config constants
-  private static final double ROBOT_MASS_KG = 56.25;
-  private static final double ROBOT_MOI = 6.883;
-  private static final double WHEEL_COF = 1.2;
+  private static final double ROBOT_MASS_KG = 61;
+  private static final double ROBOT_MOI = 7.088;
+  private static final double WHEEL_COF = 1.4;
   private static final RobotConfig PP_CONFIG =
       new RobotConfig(
           ROBOT_MASS_KG,
@@ -142,7 +142,7 @@ public class Drive extends SubsystemBase {
     sysId =
         new SysIdRoutine(
             new SysIdRoutine.Config(
-                null,
+                Volts.of(0.5).per(Second),
                 null,
                 null,
                 (state) -> Logger.recordOutput("Drive/SysIdState", state.toString())),
