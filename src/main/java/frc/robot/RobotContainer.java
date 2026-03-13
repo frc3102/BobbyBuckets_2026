@@ -311,17 +311,17 @@ public class RobotContainer {
     driverController.povUp().onTrue(elevator.goToPosition(ElevatorConstants.TOP_POSITION));
     driverController.povRight().onTrue(elevator.goToPosition(ElevatorConstants.CLIMB_POSITION));
 
-    coDriverController.button(12).whileTrue(new AutoDistanceShoot(superstructure));
+    coDriverController.button(10).whileTrue(new AutoDistanceShoot(superstructure));
     coDriverController
-        .button(10)
+        .button(1)
         .whileTrue(
             new ShootCommand(
                 superstructure,
                 RotationsPerSecond.of(SuperstructureConstants.Shooter.TRENCH_SHOOT_SPEED)));
 
-    coDriverController.button(-1).whileTrue(new TuningShot(superstructure));
-    coDriverController.button(-1).onTrue(haptics.headBackWarningCommand());
-    coDriverController.button(-1).onTrue(haptics.startShootingCommand());
+    coDriverController.button(12).whileTrue(new TuningShot(superstructure));
+    coDriverController.button(5).onTrue(haptics.headBackWarningCommand());
+    coDriverController.button(2).onTrue(haptics.startShootingCommand());
   }
 
   /**
