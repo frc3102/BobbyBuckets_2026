@@ -84,10 +84,13 @@ public class ShootingCalculator {
       var map =
           new InterpolatingTreeMap<Distance, AngularVelocity>(
               ShootingCalculator::inverseInterp, ShootingCalculator::interp);
-      map.put(Feet.of(4.25), RotationsPerSecond.of(36));
-      map.put(Feet.of(7.5), RotationsPerSecond.of(46.5));
-      map.put(Feet.of(12.125), RotationsPerSecond.of(49.75));
-      map.put(Feet.of(17.8), RotationsPerSecond.of(55));
+
+      map.put(Feet.of(5), RotationsPerSecond.of(35));
+      map.put(Feet.of(7), RotationsPerSecond.of(39));
+      map.put(Feet.of(10), RotationsPerSecond.of(45));
+      map.put(Feet.of(12), RotationsPerSecond.of(51));
+      map.put(Feet.of(14), RotationsPerSecond.of(57));
+
       shootingMap = map;
     }
     return shootingMap;

@@ -8,6 +8,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.ParentDevice;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
@@ -52,6 +53,7 @@ public class IntakeFeedIOTalonFX implements IntakeFeedIO {
     intakeConfig.CurrentLimits.SupplyCurrentLimit = IntakeFeedConstants.Motor.CURRENT_LIMIT;
     intakeConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
     intakeConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+    intakeConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
     intakeConfig.Slot0.kP = motorKP.get();
     intakeConfig.Slot0.kI = motorKI.get();
     intakeConfig.Slot0.kD = motorKD.get();

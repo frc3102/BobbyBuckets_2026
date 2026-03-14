@@ -27,7 +27,6 @@ import frc.robot.commands.AutoTiltAndWait;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.JiggleHopper;
 import frc.robot.commands.ShootCommand;
-import frc.robot.commands.TuningShot;
 import frc.robot.game.GameState;
 import frc.robot.game.GameStateIO;
 import frc.robot.game.GameStateIORobot;
@@ -319,9 +318,7 @@ public class RobotContainer {
                 superstructure,
                 RotationsPerSecond.of(SuperstructureConstants.Shooter.TRENCH_SHOOT_SPEED)));
 
-    coDriverController.button(12).whileTrue(new TuningShot(superstructure));
-    coDriverController.button(5).onTrue(haptics.headBackWarningCommand());
-    coDriverController.button(2).onTrue(haptics.startShootingCommand());
+    // coDriverController.button(12).whileTrue(new TuningShot(superstructure));
   }
 
   /**

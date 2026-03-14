@@ -14,6 +14,7 @@ public class GameStateIORobot implements GameStateIO {
 
   @Override
   public void updateInputs(GameStateInputs inputs) {
+    updateAlliance();
     updateFirstActiveAlliance();
     updateGamePhase();
     inputs.alliance = alliance;
@@ -22,6 +23,10 @@ public class GameStateIORobot implements GameStateIO {
     inputs.shouldHeadBack = isHeadBackWarning();
     inputs.shouldStartShooting = isGreenLightPreShift();
     inputs.matchType = DriverStation.getMatchType();
+  }
+
+  private void updateAlliance() {
+    alliance = DriverStation.getAlliance().orElse(Alliance.Blue);
   }
 
   public void updateFirstActiveAlliance() {
