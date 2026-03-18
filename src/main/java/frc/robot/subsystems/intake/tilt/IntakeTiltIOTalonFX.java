@@ -21,11 +21,11 @@ import frc.robot.Constants;
 public class IntakeTiltIOTalonFX implements IntakeTiltIO {
 
   private final TalonFX tilt = new TalonFX(IntakeTiltConstants.CAN_ID);
-  private final StatusSignal<Angle> tiltPositionRot = tilt.getPosition();
-  private final StatusSignal<AngularVelocity> tiltVelocityRotPerSec = tilt.getVelocity();
-  private final StatusSignal<Voltage> tiltAppliedVolts = tilt.getMotorVoltage();
-  private final StatusSignal<Current> tiltCurrentAmps = tilt.getSupplyCurrent();
-  private final StatusSignal<Temperature> tiltCurrentTemp = tilt.getDeviceTemp();
+  private final StatusSignal<Angle> position = tilt.getPosition();
+  private final StatusSignal<AngularVelocity> velocity = tilt.getVelocity();
+  private final StatusSignal<Voltage> appliedVolts = tilt.getMotorVoltage();
+  private final StatusSignal<Current> supplyAmps = tilt.getSupplyCurrent();
+  private final StatusSignal<Temperature> temp = tilt.getDeviceTemp();
 
   private final MotionMagicVoltage voltageRequest = new MotionMagicVoltage(0);
 
@@ -74,11 +74,11 @@ public class IntakeTiltIOTalonFX implements IntakeTiltIO {
     tryUntilOk(5, () -> tilt.getConfigurator().apply(tiltConfig, 0.25));
     BaseStatusSignal.setUpdateFrequencyForAll(
         50.0,
-        tiltPositionRot,
-        tiltVelocityRotPerSec,
-        tiltAppliedVolts,
-        tiltCurrentAmps,
-        tiltCurrentTemp);
+        position,
+        velocity,
+        appliedVolts,
+        supplyAmps,
+        temp);
     ParentDevice.optimizeBusUtilizationForAll(tilt);
     zeroPosition();
     tiltSim =
@@ -95,16 +95,16 @@ public class IntakeTiltIOTalonFX implements IntakeTiltIO {
   public void updateInputs(IntakeTiltIOInputs inputs) {
     var status =
         BaseStatusSignal.refreshAll(
-            tiltPositionRot,
-            tiltVelocityRotPerSec,
-            tiltAppliedVolts,
-            tiltCurrentAmps,
-            tiltCurrentTemp);
+            position,
+            velocity,
+            appliedVolts,
+            supplyAmps,
+            temp);
     inputs.connected = status.isOK();
-    inputs.appliedVolts = tiltAppliedVolts.getValue();
-    inputs.currentAmps = tiltCurrentAmps.getValue();
-    inputs.position = tiltPositionRot.getValue().div(IntakeTiltConstants.GEAR_RATIO);
-    inputs.temp = tiltCurrentTemp.getValue();
+    inputs.appliedVolts = appliedVolts.getValue();
+    inputs.currentAmps = supplyAmps.getValue();
+    inputs.position = position.getValue();
+    inputs.temp = temp.getValue();
 
     if (Constants.TUNING_MODE) {
       LoggedTunableNumber.ifChanged(
