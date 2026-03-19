@@ -4,7 +4,7 @@ import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.SignalLogger;
 import edu.wpi.first.math.filter.Debouncer;
-import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -48,8 +48,8 @@ public class Elevator extends SubsystemBase {
     LoggedTracer.record("Elevator");
   }
 
-  public Distance getPosition() {
-    return inputs.linearPosition;
+  public Angle getPosition() {
+    return inputs.angularPosition;
   }
 
   // public boolean isAtPosition(Positions position) {
@@ -59,7 +59,11 @@ public class Elevator extends SubsystemBase {
   // ElevatorConstants.Mechanism.LINEAR_POSITION_TOLERANCE));
   // }
 
-  public Command goToPosition(double position) {
+  public void goToPosition(double position) {
+    io.setPosition(Rotations.of(position));
+  }
+
+  public Command goToPositionCommand(double position) {
     return runOnce(
         () -> {
           io.setPosition(Rotations.of(position));

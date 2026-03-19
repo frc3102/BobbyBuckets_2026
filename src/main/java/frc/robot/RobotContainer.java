@@ -25,6 +25,7 @@ import frc.lib.team6328.util.LoggedTracer;
 import frc.robot.commands.AutoDistanceShoot;
 import frc.robot.commands.AutoJiggleHopper;
 import frc.robot.commands.AutoTiltAndWait;
+import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.JiggleHopper;
 import frc.robot.commands.ShootCommand;
@@ -252,11 +253,11 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("AimAtHub", aimCommand);
     NamedCommands.registerCommand(
-        "ElevatorUp", elevator.goToPosition(ElevatorConstants.TOP_POSITION));
+        "ElevatorUp", elevator.goToPositionCommand(ElevatorConstants.TOP_POSITION));
     NamedCommands.registerCommand(
-        "ElevatorClimb", elevator.goToPosition(ElevatorConstants.CLIMB_POSITION));
+        "ElevatorClimb", new ClimbCommand(elevator, ElevatorConstants.CLIMB_POSITION));
     NamedCommands.registerCommand(
-        "ElevatorDown", elevator.goToPosition(ElevatorConstants.BOTTOM_POSITION));
+        "ElevatorDown", elevator.goToPositionCommand(ElevatorConstants.BOTTOM_POSITION));
     NamedCommands.registerCommand(
         "TiltOutAndWait", new AutoTiltAndWait(intakeTilt, IntakeTiltConstants.OUT_POSITION));
     NamedCommands.registerCommand("TiltOut", intakeTilt.extendHopper());
@@ -308,14 +309,23 @@ public class RobotContainer {
                 () -> -driverController.getLeftX(),
                 RobotContainer::getAngleToTrench));
     driverController.back().onTrue(drive.zeroGyroscope());
-    driverController.povDown().onTrue(elevator.goToPosition(ElevatorConstants.BOTTOM_POSITION));
-    driverController.povUp().onTrue(elevator.goToPosition(ElevatorConstants.TOP_POSITION));
-    driverController.povRight().onTrue(elevator.goToPosition(ElevatorConstants.CLIMB_POSITION));
+    driverController
+        .povDown()
+        .onTrue(elevator.goToPositionCommand(ElevatorConstants.BOTTOM_POSITION));
+    driverController.povUp().onTrue(elevator.goToPositionCommand(ElevatorConstants.TOP_POSITION));
+    driverController
+        .povRight()
+        .onTrue(new ClimbCommand(elevator, ElevatorConstants.CLIMB_POSITION));
     driverController
         .povLeft()
         .onTrue(Commands.runOnce(() -> elevator.setVoltage(Volts.of(-1)), elevator))
-        .onFalse(elevator.zeroElevator());
-
+        .onFalse(
+            Commands.runOnce(
+                    () -> {
+                      elevator.setVoltage(Volts.of(0));
+                    },
+                    elevator)
+                .andThen(elevator.zeroElevator()));
     coDriverController.button(10).whileTrue(new AutoDistanceShoot(superstructure));
     coDriverController
         .button(1)

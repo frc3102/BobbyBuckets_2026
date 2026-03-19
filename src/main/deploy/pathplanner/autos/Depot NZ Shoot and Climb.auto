@@ -120,7 +120,7 @@
         {
           "type": "named",
           "data": {
-            "name": "ElevatorDown"
+            "name": "ElevatorClimb"
           }
         }
       ]

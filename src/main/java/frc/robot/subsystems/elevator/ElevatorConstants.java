@@ -13,7 +13,7 @@ public class ElevatorConstants {
 
   public static final double BOTTOM_POSITION = 0;
   public static final double TOP_POSITION = 43;
-  public static final double CLIMB_POSITION = 20;
+  public static final double CLIMB_POSITION = 5;
 
   public static class Mechanism {
     public static final Distance PULLEY_CIRCUMFERENCE = Inches.of(1);
