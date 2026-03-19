@@ -52,9 +52,15 @@
                 }
               },
               {
+                "type": "named",
+                "data": {
+                  "name": "JiggleHopper"
+                }
+              },
+              {
                 "type": "wait",
                 "data": {
-                  "waitTime": 10.0
+                  "waitTime": 6.0
                 }
               }
             ]
@@ -70,6 +76,18 @@
           "type": "named",
           "data": {
             "name": "IntakeStop"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Middle Depot Climb"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ElevatorClimb"
           }
         }
       ]

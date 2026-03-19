@@ -73,12 +73,7 @@ public class IntakeTiltIOTalonFX implements IntakeTiltIO {
 
     tryUntilOk(5, () -> tilt.getConfigurator().apply(tiltConfig, 0.25));
     BaseStatusSignal.setUpdateFrequencyForAll(
-        50.0,
-        position,
-        velocity,
-        appliedVolts,
-        supplyAmps,
-        temp);
+        50.0, position, velocity, appliedVolts, supplyAmps, temp);
     ParentDevice.optimizeBusUtilizationForAll(tilt);
     zeroPosition();
     tiltSim =
@@ -93,13 +88,7 @@ public class IntakeTiltIOTalonFX implements IntakeTiltIO {
 
   @Override
   public void updateInputs(IntakeTiltIOInputs inputs) {
-    var status =
-        BaseStatusSignal.refreshAll(
-            position,
-            velocity,
-            appliedVolts,
-            supplyAmps,
-            temp);
+    var status = BaseStatusSignal.refreshAll(position, velocity, appliedVolts, supplyAmps, temp);
     inputs.connected = status.isOK();
     inputs.appliedVolts = appliedVolts.getValue();
     inputs.currentAmps = supplyAmps.getValue();

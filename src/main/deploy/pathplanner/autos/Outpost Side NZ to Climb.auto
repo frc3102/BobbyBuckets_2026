@@ -26,13 +26,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Depot Start to NZ Intake"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Depot NZ Intake and Back to Zone"
+            "pathName": "Outpost Start to NZ Intake"
           }
         },
         {
@@ -40,15 +34,15 @@
           "data": {
             "commands": [
               {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.5
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "AimAtHub"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.5
                 }
               }
             ]
@@ -61,7 +55,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoShoot"
+                  "name": "ShootAtHub"
                 }
               },
               {
@@ -82,7 +76,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Depot Shoot to Climb"
+            "pathName": "Outpost Side Shoot to Climb"
           }
         },
         {

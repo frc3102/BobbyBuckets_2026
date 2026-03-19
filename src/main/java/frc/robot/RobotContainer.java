@@ -85,6 +85,7 @@ public class RobotContainer {
   private boolean startShootingWarning = false;
 
   // Controller
+  
   private final CommandXboxController driverController = new CommandXboxController(0);
   private final CommandGenericHID coDriverController = new CommandGenericHID(1);
 
@@ -178,7 +179,6 @@ public class RobotContainer {
         "Drive SysId (Dynamic Forward)", drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
     autoChooser.addOption(
         "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
-
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -282,7 +282,7 @@ public class RobotContainer {
     driverController.b().onTrue(intakeFeed.stopIntake());
     driverController.x().onTrue(intakeTilt.extendHopper());
     driverController.y().onTrue(intakeTilt.retractHopper());
-    driverController.rightBumper().onTrue(intakeFeed.startIntakeVoltage(Volts.of(5.5)));
+    //driverController.rightBumper().onTrue(intakeFeed.startIntakeVoltage(Volts.of(5.5)));
     driverController
         .leftBumper()
         .whileTrue(
