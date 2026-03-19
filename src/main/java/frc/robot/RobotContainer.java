@@ -8,7 +8,6 @@
 package frc.robot;
 
 import static edu.wpi.first.units.Units.RotationsPerSecond;
-import static edu.wpi.first.units.Units.Volts;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -85,7 +84,7 @@ public class RobotContainer {
   private boolean startShootingWarning = false;
 
   // Controller
-  
+
   private final CommandXboxController driverController = new CommandXboxController(0);
   private final CommandGenericHID coDriverController = new CommandGenericHID(1);
 
@@ -232,7 +231,7 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "JiggleHopper",
         new AutoJiggleHopper(
-            intakeTilt, IntakeTiltConstants.OUT_POSITION, IntakeTiltConstants.FEED_POSITION, 0.75));
+            intakeTilt, IntakeTiltConstants.OUT_POSITION, IntakeTiltConstants.FEED_POSITION, 1.5));
     NamedCommands.registerCommand(
         "ShootAtHub", new ShootCommand(superstructure, RotationsPerSecond.of(45)));
     NamedCommands.registerCommand(
@@ -282,7 +281,7 @@ public class RobotContainer {
     driverController.b().onTrue(intakeFeed.stopIntake());
     driverController.x().onTrue(intakeTilt.extendHopper());
     driverController.y().onTrue(intakeTilt.retractHopper());
-    //driverController.rightBumper().onTrue(intakeFeed.startIntakeVoltage(Volts.of(5.5)));
+    // driverController.rightBumper().onTrue(intakeFeed.startIntakeVoltage(Volts.of(5.5)));
     driverController
         .leftBumper()
         .whileTrue(

@@ -30,9 +30,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Depot NZ Intake and Back to Zone"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Depot NZ Intake and Back to Zone"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeStart"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeStop"
           }
         },
         {
@@ -80,9 +99,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Depot Shoot to Climb"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Depot Shoot to Climb"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ElevatorUp"
+                }
+              }
+            ]
           }
         },
         {
