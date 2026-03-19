@@ -49,12 +49,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "IntakeStop"
-          }
-        },
-        {
           "type": "race",
           "data": {
             "commands": [
@@ -99,6 +93,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "IntakeStop"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -120,7 +120,7 @@
         {
           "type": "named",
           "data": {
-            "name": "ElevatorClimb"
+            "name": "ElevatorDown"
           }
         }
       ]
