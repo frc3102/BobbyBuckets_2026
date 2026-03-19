@@ -73,11 +73,10 @@ public class Elevator extends SubsystemBase {
         });
   }
 
-
   public void setVoltage(Voltage volts) {
     io.setVoltage(volts);
   }
-  
+
   public Command zeroElevator() {
     return runOnce(
         () -> {

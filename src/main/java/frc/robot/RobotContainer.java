@@ -313,8 +313,7 @@ public class RobotContainer {
     driverController.povRight().onTrue(elevator.goToPosition(ElevatorConstants.CLIMB_POSITION));
     driverController
         .povLeft()
-        .onTrue(
-            Commands.runOnce(() -> elevator.setVoltage(Volts.of(-1)), elevator))
+        .onTrue(Commands.runOnce(() -> elevator.setVoltage(Volts.of(-1)), elevator))
         .onFalse(elevator.zeroElevator());
 
     coDriverController.button(10).whileTrue(new AutoDistanceShoot(superstructure));
