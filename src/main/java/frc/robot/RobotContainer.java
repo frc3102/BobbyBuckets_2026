@@ -8,6 +8,7 @@
 package frc.robot;
 
 import static edu.wpi.first.units.Units.RotationsPerSecond;
+import static edu.wpi.first.units.Units.Volts;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -16,6 +17,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -309,6 +311,11 @@ public class RobotContainer {
     driverController.povDown().onTrue(elevator.goToPosition(ElevatorConstants.BOTTOM_POSITION));
     driverController.povUp().onTrue(elevator.goToPosition(ElevatorConstants.TOP_POSITION));
     driverController.povRight().onTrue(elevator.goToPosition(ElevatorConstants.CLIMB_POSITION));
+    driverController
+        .povLeft()
+        .onTrue(
+            Commands.runOnce(() -> elevator.setVoltage(Volts.of(-1)), elevator))
+        .onFalse(elevator.zeroElevator());
 
     coDriverController.button(10).whileTrue(new AutoDistanceShoot(superstructure));
     coDriverController

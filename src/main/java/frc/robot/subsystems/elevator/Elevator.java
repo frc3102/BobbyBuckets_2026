@@ -5,6 +5,7 @@ import static edu.wpi.first.units.Units.*;
 import com.ctre.phoenix6.SignalLogger;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -72,6 +73,11 @@ public class Elevator extends SubsystemBase {
         });
   }
 
+
+  public void setVoltage(Voltage volts) {
+    io.setVoltage(volts);
+  }
+  
   public Command zeroElevator() {
     return runOnce(
         () -> {
