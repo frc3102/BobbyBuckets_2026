@@ -9,6 +9,8 @@ import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.ParentDevice;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
@@ -83,6 +85,7 @@ public class ElevatorIOTalonFX implements ElevatorIO {
     config.MotionMagic.MotionMagicAcceleration = motorMMAccel.get();
     config.MotionMagic.MotionMagicCruiseVelocity = motorMMCruise.get();
     config.MotionMagic.MotionMagicJerk = motorMMJerk.get();
+    config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     PhoenixUtil.tryUntilOk(5, () -> elevator.getConfigurator().apply(config, 0.25));
     positionRequest = new MotionMagicVoltage(0);
     voltageRequest = new VoltageOut(0);
