@@ -24,9 +24,21 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "IntakeStart"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Outpost Start to NZ Intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeStop"
           }
         },
         {
@@ -74,9 +86,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Outpost Side Shoot to Climb"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Outpost Side Shoot to Climb"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ElevatorUp"
+                }
+              }
+            ]
           }
         },
         {
