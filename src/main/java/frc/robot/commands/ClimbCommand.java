@@ -38,7 +38,7 @@ public class ClimbCommand extends Command {
         timer.reset();
       }
     }
-    
+
     return done;
   }
 

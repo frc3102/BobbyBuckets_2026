@@ -249,7 +249,9 @@ public class RobotContainer {
                 () -> {
                   var angle = RobotContainer.getAngleToHub();
                   return drive.getRotation().getMeasure().isNear(angle.getMeasure(), 0.05);
-                }).finallyDo((b) -> {
+                })
+            .finallyDo(
+                (b) -> {
                   drive.stop();
                 });
 
