@@ -235,7 +235,7 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "JiggleHopper",
         new AutoJiggleHopper(
-            intakeTilt, IntakeTiltConstants.OUT_POSITION, IntakeTiltConstants.FEED_POSITION, 1.5));
+            intakeTilt, IntakeTiltConstants.OUT_POSITION, IntakeTiltConstants.FEED_POSITION, 2, 1));
     NamedCommands.registerCommand(
         "ShootAtHub", new ShootCommand(superstructure, RotationsPerSecond.of(45)));
     NamedCommands.registerCommand(

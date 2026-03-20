@@ -8,11 +8,11 @@ import frc.robot.subsystems.intake.tilt.IntakeTilt;
 public class AutoJiggleHopper extends SequentialCommandGroup {
 
   public AutoJiggleHopper(
-      IntakeTilt tilt, double outPosition, double inPosition, double delaySecs) {
+      IntakeTilt tilt, double outPosition, double inPosition, double delaySecs, double downSecs) {
     var tiltCommand = new JiggleHopper(tilt, outPosition, inPosition);
     var cmd =
         new ParallelRaceGroup(tiltCommand, new WaitCommand(delaySecs))
-            .andThen(new WaitCommand(delaySecs))
+            .andThen(new WaitCommand(downSecs))
             .repeatedly();
     addCommands(cmd);
   }
