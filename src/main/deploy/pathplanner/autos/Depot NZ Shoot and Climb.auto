@@ -30,6 +30,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "IntakeStart"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -37,12 +43,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "Depot NZ Intake and Back to Zone"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeStart"
                 }
               }
             ]
