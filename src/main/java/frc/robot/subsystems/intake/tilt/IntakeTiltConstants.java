@@ -11,7 +11,7 @@ public class IntakeTiltConstants {
   public static final Angle EXTENDED_POSITION = Degrees.of(120);
   public static final double IN_POSITION = 7;
   // original: -24, tight: -33, -30 middle
-  public static final double OUT_POSITION = -33;
+  public static final double OUT_POSITION = -28;
   public static final double FEED_POSITION = -5;
 
   public static class Motor {
