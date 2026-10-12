@@ -281,8 +281,8 @@ public class RobotContainer {
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
-            () -> -driverController.getLeftY(),
-            () -> -driverController.getLeftX(),
+            () -> -driverController.getLeftY() * 0.65,
+            () -> -driverController.getLeftX() * 0.65,
             () -> -driverController.getRightX()));
 
     driverController.a().onTrue(intakeFeed.startIntake());
@@ -330,9 +330,9 @@ public class RobotContainer {
                     },
                     elevator)
                 .andThen(elevator.zeroElevator()));
-    coDriverController.button(10).whileTrue(new AutoDistanceShoot(superstructure));
+    coDriverController.button(2).whileTrue(new AutoDistanceShoot(superstructure));
     coDriverController
-        .button(1)
+        .button(3)
         .whileTrue(
             new ShootCommand(
                 superstructure,
