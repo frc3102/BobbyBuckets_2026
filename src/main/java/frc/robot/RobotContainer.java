@@ -28,6 +28,7 @@ import frc.robot.commands.AutoTiltAndWait;
 import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.JiggleHopper;
+import frc.robot.commands.ManualShootCommand;
 import frc.robot.commands.ShootCommand;
 import frc.robot.game.GameState;
 import frc.robot.game.GameStateIO;
@@ -338,8 +339,13 @@ public class RobotContainer {
                 superstructure,
                 RotationsPerSecond.of(SuperstructureConstants.Shooter.TRENCH_SHOOT_SPEED)));
 
+    coDriverController.button(5)
+      .and(coDriverController.button(4))
+      .whileTrue(new ManualShootCommand(superstructure, () -> coDriverController.getRawAxis(0)));
     // coDriverController.button(12).whileTrue(new TuningShot(superstructure));
   }
+
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
