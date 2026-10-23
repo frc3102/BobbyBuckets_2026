@@ -282,8 +282,8 @@ public class RobotContainer {
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
-            () -> -driverController.getLeftY() * 0.65,
-            () -> -driverController.getLeftX() * 0.65,
+            () -> -driverController.getLeftY() * 0.85,
+            () -> -driverController.getLeftX() * 0.85,
             () -> -driverController.getRightX()));
 
     driverController.a().onTrue(intakeFeed.startIntake());
