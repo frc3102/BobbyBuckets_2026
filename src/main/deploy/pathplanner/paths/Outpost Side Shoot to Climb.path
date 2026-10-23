@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.0852050888446763,
-        "y": 1.509699077250275
+        "x": 2.428488095238096,
+        "y": 2.037440476190476
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.2465091588913282,
-        "y": 1.4688980601673998
+        "x": 1.5897921652847478,
+        "y": 1.9966394591076009
       },
       "isLocked": false,
       "linkedName": "Outpost After Shoot"
@@ -30,7 +30,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.7591104822834615,
+      "waypointRelativePos": 0.5883817427385913,
       "rotationDegrees": 180.0
     }
   ],

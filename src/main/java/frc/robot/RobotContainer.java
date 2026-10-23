@@ -290,7 +290,7 @@ public class RobotContainer {
     driverController.b().onTrue(intakeFeed.stopIntake());
     driverController.x().onTrue(intakeTilt.extendHopper());
     driverController.y().onTrue(intakeTilt.retractHopper());
-    // driverController.rightBumper().onTrue(intakeFeed.startIntakeVoltage(Volts.of(5.5)));
+    driverController.rightBumper().onTrue(intakeFeed.startIntakeVoltage(Volts.of(6)));
     driverController
         .leftBumper()
         .whileTrue(
